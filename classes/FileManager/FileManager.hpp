@@ -12,7 +12,8 @@ using namespace std;
 class FileManager {
 public:
   void write(string filename, vector<string> data);
-  vector<vector<string>> read(string path);
+  vector<vector<string>> readFiles(string path);
+  vector<string> readFile(string path);
 };
 
 #endif // __FILE_MANAGER__

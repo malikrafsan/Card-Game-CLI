@@ -10,16 +10,22 @@ void FileManager::write(string filename, vector<string> data) {
   file.close();
 }
 
-vector<vector<string>> FileManager::read(string path) {
+vector<string> FileManager::readFile(string path) {
+  ifstream fileStream(path);
+  vector<string> lines;
+
+  for (string line; getline(fileStream, line);) {
+    lines.push_back(line);
+  }
+  
+  return lines;
+}
+
+vector<vector<string>> FileManager::readFiles(string path) {
   vector<vector<string>> data;
 
-  for (const auto & file : filesystem::directory_iterator(path)) {
-    ifstream fileStream(file.path());
-    vector<string> lines;
-    for (string line; getline(fileStream, line);) {
-      lines.push_back(line);
-    }
-    data.push_back(lines);
+  for (const auto &file : filesystem::directory_iterator(path)) {
+    data.push_back(this->readFile(file.path()));
   }
 
   return data;

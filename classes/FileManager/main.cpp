@@ -7,12 +7,22 @@ int main(int argc, char **argv) {
   FileManager fm;
   fm.write(outputFile, data);
 
-  vector<vector<string>> files = fm.read("../../config/recipe");
+  cout<< "READ FILES CONFIG" << endl;
+
+  vector<vector<string>> files = fm.readFiles("../../config/recipe");
 
   for (int i=0;i<files.size();i++) {
     for (int j=0;j<files[i].size();j++) {
       cout << files[i][j] << endl;
     }
+  }
+
+  cout<< "\nREAD FILE ITEM.TXT\n" << endl;
+
+  vector<string> file = fm.readFile("../../config/item.txt");
+
+  for (int i=0;i<file.size();i++) {
+    cout << file[i] << endl;
   }
 
   return 0;
