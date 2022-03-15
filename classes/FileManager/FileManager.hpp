@@ -16,4 +16,24 @@ public:
   vector<string> readFile(string path);
 };
 
+class FileNotFoundException: public exception {
+private:
+  const string filename;
+public:
+  FileNotFoundException(string filename): filename(filename) {}
+  const char* what() const throw() {
+    return "File not found";
+  }
+};
+
+class FileCannotBeWrittenException: public exception {
+private:
+  const string filename;
+public:
+  FileCannotBeWrittenException(string filename): filename(filename) {}
+  const char* what() const throw() {
+    return "File cannot be written";
+  }
+};
+
 #endif // __FILE_MANAGER__

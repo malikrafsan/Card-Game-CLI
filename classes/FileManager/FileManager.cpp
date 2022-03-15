@@ -4,6 +4,11 @@
 void FileManager::write(string filename, vector<string> data) {
   ofstream file;
   file.open(filename);
+
+  if (!file) {
+    throw FileCannotBeWrittenException(filename);
+  }
+
   for (int i = 0; i < data.size(); i++) {
     file << data[i] << endl;
   }
@@ -12,8 +17,12 @@ void FileManager::write(string filename, vector<string> data) {
 
 vector<string> FileManager::readFile(string path) {
   ifstream fileStream(path);
-  vector<string> lines;
 
+  if (!fileStream) {
+    throw FileNotFoundException(path);
+  }
+
+  vector<string> lines;
   for (string line; getline(fileStream, line);) {
     lines.push_back(line);
   }

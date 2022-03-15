@@ -1,28 +1,48 @@
 #include "FileManager.hpp"
 
+void printDivider() {
+  cout << "\n==========================================================\n" << endl;
+}
+
 int main(int argc, char **argv) {
-  string outputFile = "out.o";
-  vector<string> data = {"1:1", "2:2", "3:3"};
-
   FileManager fm;
-  fm.write(outputFile, data);
 
-  cout<< "READ FILES CONFIG" << endl;
+  try {
+    string outputFile = "out/out.o";
+    vector<string> data = {"1:1", "2:2", "3:3"};
 
-  vector<vector<string>> files = fm.readFiles("../../config/recipe");
-
-  for (int i=0;i<files.size();i++) {
-    for (int j=0;j<files[i].size();j++) {
-      cout << files[i][j] << endl;
-    }
+    cout << "WRITE FILE " << outputFile << endl;
+    fm.write(outputFile, data);
+  } catch (const std::exception &e) {
+    cout << "EXCEPTION: " << e.what() << endl;
   }
 
-  cout<< "\nREAD FILE ITEM.TXT\n" << endl;
+  printDivider();
 
-  vector<string> file = fm.readFile("../../config/item.txt");
+  try {
+    cout << "READ FILES CONFIG" << endl;
+    vector<vector<string>> files = fm.readFiles("../../config/recipe");
 
-  for (int i=0;i<file.size();i++) {
-    cout << file[i] << endl;
+    for (int i = 0; i < files.size(); i++) {
+      for (int j = 0; j < files[i].size(); j++) {
+        cout << files[i][j] << endl;
+      }
+    }
+  } catch (const std::exception &e) {
+    cout << "EXCEPTION: " << e.what() << endl;
+  }
+
+  printDivider();
+
+  try {
+    cout << "READ FILE ITEM.TXT" << endl;
+    vector<string> file = fm.readFile("../../config/itemNOTFOUND.txt");
+
+    for (int i = 0; i < file.size(); i++) {
+      cout << file[i] << endl;
+    }
+  } catch (const std::exception &e) {
+    cout << "EXCEPTION: " << e.what() << endl;
   }
 
   return 0;
