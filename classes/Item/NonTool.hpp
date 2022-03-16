@@ -5,7 +5,7 @@
 
 class NonTool : public Item {
 public:
-    NonTool(int _id, string _name) : Item(_id, _name) {}
+    NonTool(int _id, string _name) : Item(_id, _name, false) {}
 
     pair<int, int> exportItem() const { return make_pair(id, -1); } // nggak bisa ngakses quantity
     // kayanya harus ditanganin di luar class item ?

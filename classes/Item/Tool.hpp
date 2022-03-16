@@ -9,7 +9,7 @@ protected:
     int durability;
 public:
     Tool() : Item(), durability(-1), material("none") {}
-    Tool(int _id, string _name, string _material) : Item(_id, _name), durability(10), material(_material) {}
+    Tool(int _id, string _name, string _material) : Item(_id, _name, true), durability(10), material(_material) {}
     Tool(const Tool& other) : Item(other) { material = other.material; durability = other.durability; }
     virtual void use() = 0; 
 

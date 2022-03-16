@@ -9,10 +9,11 @@ class Item{
 protected:
     const int id;
     const string name;
+    const bool isTool;  // true if item is a tool
 public:
-    Item() : id(0), name("none") {}
-    Item(int _id, string _name) : id(_id), name(_name) {}
-    Item(const Item& other) : id(other.id), name(other.name) {}
+    Item() : id(0), name("none"), isTool(false) {}
+    Item(int _id, string _name, bool _isTool) : id(_id), name(_name), isTool(_isTool) {}
+    Item(const Item& other) : id(other.id), name(other.name), isTool(other.isTool) {}
     
     int getId() const { return id; }
 
