@@ -8,7 +8,7 @@ int main(){
     Slot slot1 = Slot(new Diamond(1), 1);
     Slot slot2 = Slot(new Diamond(1), 3);
     Slot slot3 = Slot(new Stick(2), 1);
-    Slot* temp;
+    Slot temp;
 
     try
     {
@@ -20,7 +20,7 @@ int main(){
         cout << "slot1:\n";
         slot1.print();
         cout << "temp:\n";
-        temp->print();
+        temp.print();
         slot1.remove(2);
         slot1.print();
         slot1.add(slot3);

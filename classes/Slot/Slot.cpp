@@ -34,6 +34,15 @@ int Slot::getQuantity() const {
 }
 
 void Slot::add(Item* item, int qt) {
+    if (item == NULL){
+        throw SlotEmptyException();
+    }
+    
+    if (this->item == NULL) {
+        this->item = item;
+        this->quantity = quantity;
+    }
+
     if (this->item->getId() == item->getId()) {
         if (this->item->isTool) {
             throw ToolItemStackedException();
@@ -50,6 +59,14 @@ void Slot::add(Item* item, int qt) {
 }
 
 void Slot::add(Slot& slot) {
+    if (slot.item == NULL)
+        throw SlotEmptyException();
+    
+    if (this->item == NULL) {
+        this->item = slot.item;
+        this->quantity = slot.getQuantity();
+    }
+
     if (this->item->getId() == slot.item->getId()) {
         if (this->item->isTool) {
             throw ToolItemStackedException();
@@ -65,13 +82,14 @@ void Slot::add(Slot& slot) {
     }
 }
 
-Slot* Slot::remove(int qt) {
+Slot Slot::remove(int qt) {
+    // Masih ngebug, karena harusnya bikin item baru
     if (this->quantity > qt) {
         this->quantity -= qt;
-        return new Slot(this->item, qt);
+        return Slot(this->item, qt);
     } else if (this->quantity == qt) {
         this->clear();
-        return new Slot(this->item, qt);
+        return Slot(this->item, qt);
     } else {
         throw ItemNotEnoughException();
     }

@@ -20,7 +20,7 @@ class Slot {
 
         void add(Item* item, int qt);
         void add(Slot& slot);
-        Slot* remove(int qt);
+        Slot remove(int qt);
         void clear();
         void print() const;
 };
@@ -36,6 +36,13 @@ class ItemNotEnoughException : public exception {
     public:
         const char *what() const throw() {
             return "This item has not enough quantity";
+        }
+};
+
+class SlotEmptyException : public exception {
+    public:
+        const char *what() const throw() {
+            return "This slot is empty";
         }
 };
 
