@@ -3,6 +3,7 @@
 
 #include "../Inventory/Inventory.hpp"
 #include "../Item/NonTool.hpp"
+
 using namespace std;
 
 
@@ -11,6 +12,7 @@ int main(){
     {
         Inventory inv;
         Craft craft;
+
 
         craft.print();
         cout << endl;
@@ -38,6 +40,8 @@ int main(){
         cout << endl;
         inv.print();
         cout << endl;
+
+        craft.crafting();
     }
     catch(const std::exception& e)
     {

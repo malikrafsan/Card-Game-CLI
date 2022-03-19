@@ -40,6 +40,7 @@ void Craft::crafting() {
         rowCraft = 0;
         colCraft = 0;
 
+        cout << rowRecipe << colRecipe << rowCraft << endl;
         while (rowCraft + rowRecipe <= this->row && colCraft + colRecipe <= this->col)
         {
             
