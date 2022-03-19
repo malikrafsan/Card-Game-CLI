@@ -3,8 +3,10 @@
 
 Craft::Craft() : Storage(3,3) {}
 
-Craft::Craft(vector<Recipe> recipes) : Storage(3,3) {
+Craft::Craft(vector<Recipe> recipes, map<int, Item*> mapItem, map<string, int> mapItemName) : Storage(3,3) {
     this->recipes = recipes;
+    this->mapItem = mapItem;
+    this->mapItemName = mapItemName;
 }
 
 void Craft::addItem(Item* item, int row, int col, int quantity) {

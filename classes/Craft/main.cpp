@@ -3,6 +3,7 @@
 
 #include "../Inventory/Inventory.hpp"
 #include "../Item/NonTool.hpp"
+#include "../Item/Tool.hpp"
 
 using namespace std;
 
@@ -13,7 +14,6 @@ int main(){
         Inventory inv;
         Craft craft;
 
-
         craft.print();
         cout << endl;
         inv.print();
@@ -21,11 +21,13 @@ int main(){
 
         inv.addItem(new Diamond(1), 0, 0, 1);
         inv.addItem(new Stick(12), 2, 8, 3);
+        inv.addItem(new Axe(3, "Iron"), 1, 1, 1);
         
         craft.print();
         cout << endl;
         inv.print();
         cout << endl;
+        // inv.exportInventory();
 
         craft.move(inv[0], craft[0], 1);
         
@@ -34,14 +36,14 @@ int main(){
         inv.print();
         cout << endl;
 
-        craft.move(inv[0], craft[8], 2);
+        craft.move(inv[26], craft[1], 2);
         
         craft.print();
         cout << endl;
         inv.print();
         cout << endl;
 
-        craft.crafting();
+        // craft.crafting();
     }
     catch(const std::exception& e)
     {

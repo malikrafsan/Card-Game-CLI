@@ -7,18 +7,19 @@ Slot::Slot() {
 }
 
 Slot::Slot(Item* item, int quantity) {
-    this->item = item;
+    this->item = item->clone();
     this->quantity = quantity;
 }
 
 Slot::Slot(const Slot& slot) {
-    this->item = slot.item;
+    this->item = slot.item->clone();
     this->quantity = slot.quantity;
 }
 
-void Slot::operator=(const Slot& slot) {
-    this->item = slot.item;
+Slot& Slot::operator=(const Slot& slot) {
+    this->item = slot.item->clone();
     this->quantity = slot.quantity;
+    return *this;
 }
 
 Slot::~Slot() {
@@ -39,8 +40,9 @@ void Slot::add(Item* item, int qt) {
     }
     
     if (this->item == NULL) {
-        this->item = item;
-        this->quantity = quantity;
+        this->item = item->clone();
+        this->quantity = qt;
+        return;
     }
 
     if (this->item->getId() == item->getId()) {
@@ -63,8 +65,9 @@ void Slot::add(Slot& slot) {
         throw SlotEmptyException();
     
     if (this->item == NULL) {
-        this->item = slot.item;
+        this->item = slot.item->clone();
         this->quantity = slot.getQuantity();
+        return;
     }
 
     if (this->item->getId() == slot.item->getId()) {
@@ -83,13 +86,13 @@ void Slot::add(Slot& slot) {
 }
 
 Slot Slot::remove(int qt) {
-    // Masih ngebug, karena harusnya bikin item baru
     if (this->quantity > qt) {
         this->quantity -= qt;
-        return Slot(this->item, qt);
+        return Slot(this->item->clone(), qt);
     } else if (this->quantity == qt) {
+        Slot res =  Slot(this->item->clone(), qt);
         this->clear();
-        return Slot(this->item, qt);
+        return res;
     } else {
         throw ItemNotEnoughException();
     }
@@ -106,5 +109,13 @@ void Slot::print() const {
         cout << "Quantity : " << quantity << endl;
     } else {
         cout << "Slot is empty" << endl;
+    }
+}
+
+string Slot::exportItem() const {
+    if (this->item != NULL) {
+        return to_string(this->item->getId()) + ":" + to_string(quantity);
+    } else {
+        return "0:0";
     }
 }
