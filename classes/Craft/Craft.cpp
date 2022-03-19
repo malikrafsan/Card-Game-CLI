@@ -64,7 +64,7 @@ void Craft::crafting() {
                         }
                         ii++;
                     }
-                    jj++
+                    jj++;
                 }
                 colCraft++;
             }
