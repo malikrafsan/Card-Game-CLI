@@ -37,6 +37,10 @@ int Recipe::getRow() const {
   return (this->row);
 }
 
+vector<string> Recipe::getItems() const {
+  return (this->items);
+}
+
 ostream &operator<<(ostream &os, const Recipe &r) {
   os << "Recipe: " << r.row << "x" << r.col << endl;
   os << "Items: " << endl;
