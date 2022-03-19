@@ -31,39 +31,55 @@ void Craft::print() const {
 
 void Craft::crafting() {
     int rowRecipe, colRecipe, rowCraft, colCraft, ii, jj;
-    int i = 0;
+    int i = -1;
     bool found = false;
-    bool out = false
+    bool out = false;
+    string itemCrafted;
 
-    for (i = 0; i < this->recipes.size(); i++) {
+    while (i < this->recipes.size()) {
         rowRecipe = this->recipes[i].getRow();
         colRecipe = this->recipes[i].getCol();
         rowCraft = 0;
         colCraft = 0;
 
-        while (rowCraft + rowRecipe <= this->row && colCraft + colRecipe <= this->col && !found)
-        {
-            jj = 0;
-            while (jj <= this->row && !found && !out)
-            {
-                ii = 0;
-                while (ii < this->col && !found && !out)
-                {
-                    if (ii < rowCraft || ii > rowCraft + rowRecipe || jj < colCraft || jj > colCraft + colRecipe)
-                    {
-                        if (this->arr[i*this->col + j].getItem() != NULL)
-                        {
-                        out = true;
+        while (rowCraft + rowRecipe <= this->row && !found) {
+            while (colCraft + colRecipe <= this->col && !found) {
+                jj = 0;
+                while (jj <= this->row && !found && !out) {
+                    ii = 0;
+                    while (ii < this->col && !found && !out) {
+                        if (ii < rowCraft || ii > rowCraft + rowRecipe || jj < colCraft || jj > colCraft + colRecipe) {
+                            if (this->arr[ii*this->col + jj].getItem() != NULL) {
+                                out = true;
+                            }
                         }
+                        else {
+                            if (this->arr[ii*this->col + jj].getItem()->getType() != recipes[i].getItems()[(ii-rowCraft)*this->col + (jj-colCraft)]) {
+                                out = true;
+                            }
+                        }
+                        
+                        if (ii == this->row - 1 && jj == this->col - 1 && !out) {
+                            found = true;
+                        }
+                        ii++;
                     }
-                    else
-                    {
-
-                    }
-                    
+                    jj++
                 }
+                colCraft++;
+            }
+            rowCraft++;
+        }
+        i++;
+    }
+
+    i--;
+    if (found) {
+        for (ii = 0; ii < this->row; ii++) {
+            for (jj = 0; jj < this->col; jj++) {
+                this->arr[ii*this->col + jj].remove(1);
+
             }
         }
-
     }
 }

@@ -22,6 +22,7 @@ public:
   int getRow() const;
   int getCol() const;
   friend ostream& operator<<(ostream &os, const Recipe &r);
+  vector<string> getItems() const;
 };
 
 class RecipeWrongFormatException: public exception {
