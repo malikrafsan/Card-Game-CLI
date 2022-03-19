@@ -29,6 +29,14 @@ Recipe::Recipe(vector<string> data) {
   }
 }
 
+int Recipe::getCol() const {
+  return (this->col);
+}
+
+int Recipe::getRow() const {
+  return (this->row);
+}
+
 ostream &operator<<(ostream &os, const Recipe &r) {
   os << "Recipe: " << r.row << "x" << r.col << endl;
   os << "Items: " << endl;

@@ -17,6 +17,7 @@ public:
     Item(const Item& other) : id(other.id), name(other.name), isTool(other.isTool) {}
     
     int getId() const { return id; }
+    int getName() const { return name; }
 
     virtual pair<int, int> exportItem() const = 0;    // Masih belum tau mau diimplementasi gimana
                                                 // sementara ngereturn pair <int, int>

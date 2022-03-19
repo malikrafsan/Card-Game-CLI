@@ -45,4 +45,4 @@ int main(){
     }
 }
 
-// g++ -o main main.cpp Craft.cpp ../Storage/Storage.cpp ../Inventory/Inventory.cpp ../Slot/Slot.cpp
+// g++ -o main main.cpp Craft.cpp ../Storage/Storage.cpp ../Inventory/Inventory.cpp ../Slot/Slot.cpp ../Recipe/Recipe.cpp

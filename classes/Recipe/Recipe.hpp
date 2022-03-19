@@ -9,7 +9,7 @@
 using namespace std;
 
 class Recipe {
-private:
+protected:
   int row;
   int col;
   vector<string> items;
@@ -19,6 +19,8 @@ private:
 public:
   Recipe();
   Recipe(vector<string> data);
+  int getRow() const;
+  int getCol() const;
   friend ostream& operator<<(ostream &os, const Recipe &r);
 };
 

@@ -30,5 +30,20 @@ void Craft::print() const {
 }
 
 void Craft::crafting() {
-    // TODO
+    int rowRecipe, colRecipe, rowCraft, colCraft;
+    int i = 0;
+    bool found = false;
+
+    for (i = 0; i < this->recipes.size(); i++) {
+        rowRecipe = this->recipes[i].getRow();
+        colRecipe = this->recipes[i].getCol();
+        rowCraft = 0;
+        colCraft = 0;
+
+        while (rowCraft + rowRecipe <= this->row && colCraft + colRecipe <= this->col)
+        {
+            
+        }
+
+    }
 }
