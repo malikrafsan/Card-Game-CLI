@@ -30,9 +30,10 @@ void Craft::print() const {
 }
 
 void Craft::crafting() {
-    int rowRecipe, colRecipe, rowCraft, colCraft;
+    int rowRecipe, colRecipe, rowCraft, colCraft, ii, jj;
     int i = 0;
     bool found = false;
+    bool out = false
 
     for (i = 0; i < this->recipes.size(); i++) {
         rowRecipe = this->recipes[i].getRow();
@@ -40,10 +41,28 @@ void Craft::crafting() {
         rowCraft = 0;
         colCraft = 0;
 
-        cout << rowRecipe << colRecipe << rowCraft << endl;
-        while (rowCraft + rowRecipe <= this->row && colCraft + colRecipe <= this->col)
+        while (rowCraft + rowRecipe <= this->row && colCraft + colRecipe <= this->col && !found)
         {
-            
+            jj = 0;
+            while (jj <= this->row && !found && !out)
+            {
+                ii = 0;
+                while (ii < this->col && !found && !out)
+                {
+                    if (ii < rowCraft || ii > rowCraft + rowRecipe || jj < colCraft || jj > colCraft + colRecipe)
+                    {
+                        if (this->arr[i*this->col + j].getItem() != NULL)
+                        {
+                        out = true;
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                    
+                }
+            }
         }
 
     }
