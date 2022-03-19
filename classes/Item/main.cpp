@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(){
-    Pickaxe pickaxe1 = Pickaxe(1, "Gold");
+    Pickaxe pickaxe1 = Pickaxe(1, "Iron");
     pickaxe1.use();
     pickaxe1.use();
     pickaxe1.describe();
@@ -34,4 +34,15 @@ int main(){
     Stick otherStick = *stick;
     otherStick.describe();
     cout << pickaxe1.isTool << endl;
+
+    Item *item = otherStick.clone();
+    otherStick.describe();
+
+    Item *pickaxeClone = pickaxe1.clone();
+    pickaxeClone->describe();
+
+    pickaxe1.use();
+
+    pickaxe1.describe();
+    pickaxeClone->describe();
 }

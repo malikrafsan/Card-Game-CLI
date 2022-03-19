@@ -23,6 +23,11 @@ public:
 
     // kayanya export harus ditanganin di luar class(?) pake getter durability
     int getDurability() const { return durability; }
+
+    virtual Tool *clone() const { 
+        Tool *clonedTool = new Tool(*this);
+        return clonedTool;
+    }
 };
 
 class Axe : public Tool {

@@ -9,6 +9,11 @@ public:
 
     pair<int, int> exportItem() const { return make_pair(id, -1); } // nggak bisa ngakses quantity
     // kayanya harus ditanganin di luar class item ?
+
+    virtual NonTool *clone() const { 
+        NonTool *clonedNonTool = new NonTool(*this);
+        return clonedNonTool;
+    }
 };
 
 class Stick : public NonTool {

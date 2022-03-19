@@ -28,6 +28,8 @@ public:
         cout << "Id : " << id << endl;
         cout << "Name : " << name << endl;
     }
+
+    virtual Item *clone() const = 0;
 };
 
 
