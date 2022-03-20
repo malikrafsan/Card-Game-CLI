@@ -17,6 +17,15 @@ int main(int argc, char **argv) {
     cout << "EXCEPTION: " << e.what() << endl;
   }
 
+  try {
+    string outFile = "lilight.o";
+    vector<string> data2 = {"aaa", "bbbb", "ccccc"};
+    cout << "WRITE FILE " << outFile << endl;
+    fm.write(outFile, data2);
+  } catch (const std::exception &e) {
+    cout << "EXCEPTION: " << e.what() << endl;
+  }
+
   printDivider();
 
   try {

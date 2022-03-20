@@ -6,7 +6,20 @@ void FileManager::write(string filename, vector<string> data) {
   file.open(filename);
 
   if (!file) {
-    throw FileCannotBeWrittenException(filename);
+    // string path = "/home/person/dir/file";
+    size_t split = filename.find_last_of("/");
+    string dir = filename.substr(0, split);
+    // string file = path.substr(split, path.length());
+
+    if (!filesystem::exists(dir)) {
+      filesystem::create_directories(dir);
+    }
+    file.close();
+    file.open(filename);
+
+    if (!file) {
+      throw FileCannotBeWrittenException(filename);
+    }
   }
 
   for (int i = 0; i < data.size(); i++) {
@@ -34,7 +47,7 @@ vector<vector<string>> FileManager::readFiles(string path) {
   vector<vector<string>> data;
 
   for (const auto &file : filesystem::directory_iterator(path)) {
-    data.push_back(this->readFile(file.path()));
+    data.push_back(this->readFile(file.path().string()));
   }
 
   return data;
