@@ -8,7 +8,7 @@ protected:
     int durability;
 public:
     Tool() : Item(), durability(-1) {}
-    Tool(int _id, string _name, string _material) : Item(_id, _name, true), durability(10) {}
+    Tool(int _id, string _name) : Item(_id, _name, true), durability(10) {}
     Tool(const Tool& other) : Item(other) { durability = other.durability; }
     void use() { durability--; }; 
 

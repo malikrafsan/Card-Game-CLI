@@ -11,10 +11,10 @@ int main(){
     pickaxe1.use();
     pickaxe1.describe();
     
-    Item *oakPlank = new TypedNonTool(2, "OAK_PLANK","PLANK", "OAK");
+    Item *oakPlank = new TypedNonTool(2, "OAK_PLANK","PLANK");
     oakPlank->describe();
 
-    Item *birchLog = new TypedNonTool(3, "BIRCH_LOG", "LOG", "BIRCH");
+    Item *birchLog = new TypedNonTool(3, "BIRCH_LOG", "LOG");
     birchLog->describe();
 
 
