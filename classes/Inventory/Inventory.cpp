@@ -28,46 +28,61 @@ void Inventory::addItem(Item* item, int quantity) {
     }
 }
 
-void Inventory::addItem(Item* item, int row, int col, int quantity) {
-    this->arr[row*9 + col].add(item, quantity);
-}
-
-Slot Inventory::removeItem(int row, int col, int quantity) {
-    return this->arr[row*9 + col].remove(quantity);
-}
-
-void Inventory::print() const {
-    for (int i = 0; i < this->row; i++) {
-        for (int j = 0; j < this->col; j++) {
-            if (this->arr[i*this->col + j].getItem() == NULL) {
-                cout << "\t[]";
-            } else {
-                cout << "\t[" << this->arr[i*this->col + j].getItem()->getId();
-                cout << "," << this->arr[i*this->col + j].getQuantity() << "]";
-            }
+void Inventory::addItem(Item* item, string INV_SLOT_ID, int quantity) {
+    if (INV_SLOT_ID[0] != 'I') {
+        throw InvalidIDSlotException();
+    } else {
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            this->arr[idx].add(item, quantity);
         }
-        cout << endl;
+    }
+}
+
+Slot Inventory::removeItem(string INV_SLOT_ID, int quantity) {
+    if (INV_SLOT_ID[0] != 'I') {
+        throw InvalidIDSlotException();
+    } else {
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            return this->arr[idx].remove(quantity);
+        }
     }
 }
 
 void Inventory::use(string INV_SLOT_ID) {
-    int idx = stoi(INV_SLOT_ID.substr(1));
-    if (this->arr[idx].getItem() != NULL) {
-        if (this->arr[idx].getItem()->isTool) {
-            Tool *tool = static_cast<Tool*>(this->arr[idx].getItem());
-            tool->use();
-        } else {
-            // TODO : bikin exception di item atau di sini?
-            // throw NotAToolException();
-        }
+    if (INV_SLOT_ID[0] != 'I') {
+        throw InvalidIDSlotException();
     } else {
-        throw SlotEmptyException();
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            if (this->arr[idx].getItem() != NULL) {
+                Tool *tool = static_cast<Tool*>(this->arr[idx].getItem());
+                tool->use();
+            } else {
+                throw SlotEmptyException();
+            }
+        }
     }
 }
 
 void Inventory::remove(string INV_SLOT_ID, int quantity) {
-    int idx = stoi(INV_SLOT_ID.substr(1));
-    this->arr[idx].remove(quantity);
+    if (INV_SLOT_ID[0] != 'I') {
+        throw InvalidIDSlotException();
+    } else {
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            this->arr[idx].remove(quantity);
+        }
+    }
 }
 
 vector<string> Inventory::exportInventory() {
@@ -77,4 +92,57 @@ vector<string> Inventory::exportInventory() {
         cout << result[i] << endl;
     }
     return result;
+}
+
+bool Inventory::isInvSlotValid(string INV_SLOT_ID, int quantity) {
+    if (INV_SLOT_ID[0] != 'I') {
+        return false;
+    } else {
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            if (this->arr[idx].getItem() != NULL) {
+                return (this->arr[idx].getQuantity() >= quantity);
+            } else {
+                return false;
+            }
+        }
+    }
+}
+
+bool Inventory::canBeAdded(Item* item, string INV_SLOT_ID, int quantity) {
+    if (INV_SLOT_ID[0] != 'I') {
+        return false;
+    } else {
+        int idx = stoi(INV_SLOT_ID.substr(1));
+        if (idx >= 0 && idx < this->row*this->col) {
+            if (this->arr[idx].getItem() != NULL) {
+                if (this->arr[idx].getItem()->getId() == item->getId()) {
+                    return (!this->arr[idx].getItem()->isTool && this->arr[idx].getQuantity() + quantity <= 64);
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            throw InvalidIDSlotException();
+        }
+    }
+}
+
+ostream &operator<<( ostream &output, const Inventory &inventory) {
+    for (int i = 0; i < inventory.row; i++) {
+        for (int j = 0; j < inventory.col; j++) {
+            if (inventory.arr[i*inventory.col + j].getItem() == NULL) {
+                output << "\t[I" << i*inventory.col + j << "]\t";
+            } else {
+                output << "\t[I" << i*inventory.col + j << ": " << inventory.arr[i*inventory.col + j].getItem()->getId();
+                output << "," << inventory.arr[i*inventory.col + j].getQuantity() << "]";
+            }
+        }
+        output << endl;
+    }
+    return output;
 }

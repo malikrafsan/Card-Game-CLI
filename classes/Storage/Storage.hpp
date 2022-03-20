@@ -19,13 +19,21 @@ class Storage {
 
         void move(Slot& src, Slot& dst, int quantity);
         Slot& operator[](int index);
+        Slot& operator[](string slotId);
 
         // pure virtual function
-        virtual void addItem(Item* item, int row, int col, int quantity) = 0;
-        virtual Slot removeItem(int row, int col, int quantity) = 0;
-        virtual void print() const = 0;
+        virtual void addItem(Item* item, string SLOT_ID, int quantity) = 0;
+        virtual Slot removeItem(string SLOT_ID, int quantity) = 0;
+        virtual bool canBeAdded(Item* item, string INV_SLOT_ID, int quantity) = 0;
         
         // TODO : menambahkan validitas untuk command MOVE I0 N C1 C2 ... CN
+};
+
+class InvalidIDSlotException : public exception {
+    public:
+        const char *what() const throw() {
+            return "Invalid Slot ID";
+        }
 };
 
 #endif

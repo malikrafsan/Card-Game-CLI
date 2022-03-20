@@ -3,6 +3,7 @@
 
 #include "../Inventory/Inventory.hpp"
 #include "../Item/NonTool.hpp"
+#include "../Item/TypedNonTool.hpp"
 #include "../Item/Tool.hpp"
 
 using namespace std;
@@ -14,40 +15,28 @@ int main(){
         Inventory inv;
         Craft craft;
 
-        craft.print();
-        cout << endl;
-        inv.print();
-        cout << endl;
+        cout << craft << endl << inv << endl;
 
-        inv.addItem(new Diamond(1), 0, 0, 1);
-        inv.addItem(new Stick(12), 2, 8, 3);
-        inv.addItem(new Axe(3, "Iron"), 1, 1, 1);
-        
-        craft.print();
-        cout << endl;
-        inv.print();
-        cout << endl;
-        // inv.exportInventory();
+        inv.addItem(new NonTool(1, "Diamond"), "I10", 50);
+        inv.addItem(new Tool(2, "Axe"), "I20", 1);
+        inv.addItem(new TypedNonTool(3, "Birch Plank", "Plank"), "I26", 1);
 
-        craft.move(inv[0], craft[0], 1);
-        
-        craft.print();
-        cout << endl;
-        inv.print();
-        cout << endl;
+        cout << craft << endl << inv << endl;
 
-        craft.move(inv[26], craft[1], 2);
+        craft.move(inv[10], craft[0], 1);
         
-        craft.print();
-        cout << endl;
-        inv.print();
-        cout << endl;
+        cout << craft << endl << inv << endl;
+
+
+        craft.move(inv[20], craft[1], 1);
+        
+        cout << craft << endl << inv << endl;
 
         // craft.crafting();
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        cout << e.what() << endl;
     }
 }
 

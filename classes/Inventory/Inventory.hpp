@@ -9,12 +9,15 @@ class Inventory : public Storage {
         Inventory();
 
         void addItem(Item* item, int quantity);
-        void addItem(Item* item, int row, int col, int quantity);
-        Slot removeItem(int row, int col, int quantity);
-        void print() const;
+        void addItem(Item* item, string INV_SLOT_ID, int quantity);
+        Slot removeItem(string INV_SLOT_ID, int quantity);
+        friend ostream &operator<<( ostream &output, const Inventory &inventory);
 
         void use(string INV_SLOT_ID);
         void remove(string INV_SLOT_ID, int quantity);
+
+        bool isInvSlotValid(string INV_SLOT_ID, int quantity);
+        bool canBeAdded(Item* item, string INV_SLOT_ID, int quantity);
         vector<string> exportInventory();
 };
 
