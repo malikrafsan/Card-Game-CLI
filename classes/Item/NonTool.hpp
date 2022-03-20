@@ -3,37 +3,24 @@
 
 #include "Item.hpp"
 
+class NonToolUseExeption : public exception {
+private:
+    string _What;
+public:
+    NonToolUseExeption() : _What("Non-tool item cannot be used") {}
+    const char *what() const throw() { return _What.c_str(); }
+};
+
 class NonTool : public Item {
 public:
     NonTool(int _id, string _name) : Item(_id, _name, false) {}
-
-    pair<int, int> exportItem() const { return make_pair(id, -1); } // nggak bisa ngakses quantity
-    // kayanya harus ditanganin di luar class item ?
 
     virtual NonTool *clone() const { 
         NonTool *clonedNonTool = new NonTool(*this);
         return clonedNonTool;
     }
-};
 
-class Stick : public NonTool {
-public:
-    Stick(int _id) : NonTool(_id, "STICK") {}
-};
-
-class IronIngot : public NonTool {
-public:
-    IronIngot(int _id) : NonTool(_id, "IRON_INGOT") {}
-};
-
-class IronNugget : public NonTool {
-public:
-    IronNugget(int _id) : NonTool(_id, "IRON_NUGGET") {}
-};
-
-class Diamond : public NonTool {
-public:
-    Diamond(int _id) : NonTool(_id, "DIAMOND") {}
+    virtual void use (){ throw NonToolUseExeption(); }
 };
 
 #endif

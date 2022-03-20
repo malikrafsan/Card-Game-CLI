@@ -7,49 +7,21 @@
 ```
 Tool(int _id, string _name, string _material)
 ```
-
 Membuat tool dengan id, nama, dam material ditentukan sendiri
 
-```
-Axe(int _id, string _material)
-```
-
-Membuat tool spesifik axe. Cuma butuh id sama material
-```
-Sword(int _id, string _material)
-```
-Membuat tool spesifik axe. Cuma butuh id sama material
-```
-Pickaxe(int _id, string _material)
-```
-Membuat tool spesifik pickaxe. Cuma butuh id sama material
 
 ### NonTool
 ```
 NonTool(int _id, string _name)
 ```
 Membuat non-tool dengan id, dan nama ditentukan sendiri
-```
-<JenisNonTool>(int _id)
-```
-Membuat non-tool spesifik. Hanya perlu menentukan id
 
 ### TypedNonTool
 
-Tidak bisa membuat tipe yang ditentukan sendiri
 ```
-Stone(int _id, string _material)
+TypedNonTool(int _id, string _name, string _type, string _material)
 ```
-Membuat stone dengan memasukkan id dan material
-```
-Log(int _id, string _material)
-```
-Membuat log dengan memasukkan id dan material
-```
-Plank(int _id, string _material)
-```
-Membuat plank dengan memasukkan id dan material
-
+Membuat TypedNonTool dengan memasukkan id, name, type, dan material
 
 
 ## Cloning

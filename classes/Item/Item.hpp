@@ -19,8 +19,7 @@ public:
     int getId() const { return id; }
     string getName() const { return name; }
 
-    virtual pair<int, int> exportItem() const = 0;    // Masih belum tau mau diimplementasi gimana
-                                                // sementara ngereturn pair <int, int>
+    virtual void use() = 0;
 
     virtual string getType() const { return name; }
 

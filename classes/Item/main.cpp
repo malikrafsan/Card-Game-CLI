@@ -6,32 +6,26 @@
 using namespace std;
 
 int main(){
-    Pickaxe pickaxe1 = Pickaxe(1, "Iron");
+    Tool pickaxe1 = Tool(1, "IRON SWORD", "IRON");
     pickaxe1.use();
     pickaxe1.use();
     pickaxe1.describe();
-    cout << pickaxe1.exportItem().first << ":" << pickaxe1.exportItem().second << endl;
     
-    Item *oakPlank = new Plank(2, "Oak Plank", "Oak");
+    Item *oakPlank = new TypedNonTool(2, "OAK_PLANK","PLANK", "OAK");
     oakPlank->describe();
 
-    Log *birchLog = new Log(3, "Birch");
+    Item *birchLog = new TypedNonTool(3, "BIRCH_LOG", "LOG", "BIRCH");
     birchLog->describe();
 
 
-    Item *otherBirchLog = new Log(*birchLog);
-    otherBirchLog->describe();
-
-
-
-    Item *craftingTable = new NonTool(4, "Crafting Table");
+    Item *craftingTable = new NonTool(4, "CRAFTING_TABLE");
     craftingTable->describe();
 
 
-    Stick *stick = new Stick(5);
+    NonTool *stick = new NonTool(5, "STICK");
     stick->describe();
 
-    Stick otherStick = *stick;
+    NonTool otherStick = *stick;
     otherStick.describe();
     cout << pickaxe1.isTool << endl;
 
@@ -42,6 +36,7 @@ int main(){
     pickaxeClone->describe();
 
     pickaxe1.use();
+    pickaxeClone->use();
 
     pickaxe1.describe();
     pickaxeClone->describe();
