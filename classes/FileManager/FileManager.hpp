@@ -27,6 +27,17 @@ public:
   const char *what() const throw() { return _What.c_str(); }
 };
 
+class FolderNotFoundException : public exception {
+private:
+  string _What;
+
+public:
+  FolderNotFoundException(string path) {
+    this->_What = "Folder " + path + " not found";
+  }
+  const char *what() const throw() { return _What.c_str(); }
+};
+
 class FileCannotBeWrittenException : public exception {
 private:
   string _What;
