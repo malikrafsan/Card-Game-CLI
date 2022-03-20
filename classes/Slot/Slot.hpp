@@ -2,6 +2,7 @@
 #define SLOT_H
 
 #include "../Item/Item.hpp"
+#include "../Item/Tool.hpp"
 
 class Slot {
     private:
@@ -12,7 +13,7 @@ class Slot {
         Slot();
         Slot(Item* item, int quantity);
         Slot(const Slot& slot);
-        void operator=(const Slot& slot);
+        Slot& operator=(const Slot& slot);
         ~Slot();
 
         Item* getItem() const;
@@ -23,6 +24,7 @@ class Slot {
         Slot remove(int qt);
         void clear();
         void print() const;
+        string exportItem() const;
 };
 
 class ItemMismatchException : public exception {

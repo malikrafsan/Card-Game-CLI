@@ -7,11 +7,13 @@
 class Craft : public Storage {
     private:
         vector<Recipe> recipes;
+        map<int, Item*> mapItem;
+        map<string, int> mapItemName;
         Slot* result;
 
     public:
         Craft();
-        Craft(vector<Recipe> recipes);
+        Craft(vector<Recipe> recipes, map<int, Item*> mapItem, map<string, int> mapItemName);
 
         void addItem(Item* item, int row, int col, int quantity);
         Slot removeItem(int row, int col, int quantity);
