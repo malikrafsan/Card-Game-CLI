@@ -25,6 +25,10 @@ class GameManager {
     void play();
     void giveCommand(vector<string> command);
     void discardCommand(vector<string> command);
+    void moveCommand(vector<string> command);
+    void craftCommand(vector<string> command);
+    void useCommand(vector<string> command);
+    void exportCommand(vector<string> command);
 };
 
 #endif

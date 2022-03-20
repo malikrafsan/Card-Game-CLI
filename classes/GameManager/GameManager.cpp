@@ -93,9 +93,13 @@ void GameManager::play() {
         } else if(command[0]=="DISCARD") {
             discardCommand(command);
         } else if(command[0]=="MOVE") {
-
+            moveCommand(command);
         } else if(command[0]=="CRAFT") {
 
+        } else if(command[0]=="USE") {
+            useCommand(command);
+        } else if(command[0]=="EXPORT") {
+            exportCommand(command);
         } else {
             // throw invalid command exception
         }
@@ -115,6 +119,91 @@ void GameManager::giveCommand(vector<string> command) {
 void GameManager::discardCommand(vector<string> command) {
     if((int)command.size() == 3) {
         int qty = stoi(command[2]);
-        // inventory.removeItem(command[1], qty);
+        inventory.remove(command[1], qty);
+    } else {
+        ;
+    }
+}
+
+void GameManager::moveCommand(vector<string> command) {
+    if((int)command.size()>=4) {
+        int ctTarget = stoi(command[2]);
+        if(ctTarget+3==(int)command.size()) {
+            bool srcInvValid, srcCrfValid, allTargetInvValid, allTargetCrfValid;
+            srcInvValid = inventory.isInvSlotValid(command[1]);
+            srcCrfValid = craft->isCrfSlotValid(command[1]);
+            allTargetInvValid = true;
+            allTargetCrfValid = true;
+            for(int i=3;i<(int)command.size();i++) {
+                allTargetInvValid &= inventory.isInvSlotValid(command[i]);
+                allTargetCrfValid &= craft->isCrfSlotValid(command[i]);
+            }
+
+            if(srcInvValid && allTargetInvValid) {
+                if(ctTarget==1) {
+                    // numpuk sampe target 64
+                } else {
+                    ;
+                }
+            } else if(srcInvValid && allTargetCrfValid) {
+                if(inventory.canBeRemoved(ctTarget)) {
+                    Item* item = inventory[command[1]]; // atau inventory.getItem(INV_SLOT_ID)
+                    bool flag=true;
+                    for(int i=3;i<(int)command.size();i++) {
+                        flag &= craft->canBeAdded(item,command[i],1); // asumsi craft_slot_id beda semua hmm
+                    }
+                    if(flag) {
+                        inventory.remove(command[1],ctTarget);
+                        for(int i=3;i<(int)command.size();i++) {
+                            craft->addItem(item, command[i], 1); // harus bisa nambah item berdasarkan slot_id
+                        }
+                    } else {
+                        ;
+                    }
+                } else {
+                    ;
+                }
+            } else if(srcCrfValid && allTargetInvValid) {
+                if(ctTarget==1) {
+                    // ini dari Craft dipindah 1 atau pindah semua atau pindah sebisa mungkin.
+                    // kalo pindah 1 aja
+                    if(craft->canBeRemoved(1)) {
+                        Item* item = (*craft)[command[1]]; // atau craft->getItem(CRF_SLOT_ID)
+                        if(inventory.canBeAdded(item,command[3],1)) {
+                            craft->remove(command[1],1);
+                            inventory.addItem(item, command[3], 1);
+                        }
+                    }
+                } else {
+                    ;
+                }
+            } else {
+                ;
+            }
+        } else {
+            ;
+        }
+    } else {
+        ;
+    }
+}
+
+void GameManager::craftCommand(vector<string> command) {
+
+}
+
+void GameManager::useCommand(vector<string> command) {
+    if((int)command.size()==2) {
+        inventory.use(command[1]);
+    } else {
+        ;
+    }
+}
+
+void GameManager::exportCommand(vector<string> command) {
+    if((int)command.size()==2) {
+        fileManager.write(command[1], inventory.exportInventory());
+    } else {
+        ;
     }
 }
