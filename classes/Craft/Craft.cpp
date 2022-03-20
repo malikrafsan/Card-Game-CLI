@@ -37,16 +37,16 @@ Slot Craft::removeItem(string CRAFT_SLOT_ID, int quantity) {
 
 bool Craft::isCrfSlotValid(string CRAFT_SLOT_ID, int quantity) {
     if (CRAFT_SLOT_ID[0] != 'C') {
-        throw InvalidIDSlotException();
+        return false;
     } else {
         int idx = stoi(CRAFT_SLOT_ID.substr(1));
         if (idx < 0 || idx >= this->row*this->col) {
             throw InvalidIDSlotException();
         } else {
-            if (this->arr[idx].getItem() == NULL) {
-                return true;
+            if (this->arr[idx].getItem() != NULL) {
+                return (this->arr[idx].getQuantity() >= quantity);
             } else {
-                return (this->arr[idx].getItem()->getId() == quantity);
+                return false;
             }
         }
     }
