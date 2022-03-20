@@ -18,22 +18,22 @@ public:
 
 class Stick : public NonTool {
 public:
-    Stick(int _id) : NonTool(_id, "Stick") {}
+    Stick(int _id) : NonTool(_id, "STICK") {}
 };
 
 class IronIngot : public NonTool {
 public:
-    IronIngot(int _id) : NonTool(_id, "Iron Ingot") {}
+    IronIngot(int _id) : NonTool(_id, "IRON_INGOT") {}
 };
 
 class IronNugget : public NonTool {
 public:
-    IronNugget(int _id) : NonTool(_id, "Iron Nugget") {}
+    IronNugget(int _id) : NonTool(_id, "IRON_NUGGET") {}
 };
 
 class Diamond : public NonTool {
 public:
-    Diamond(int _id) : NonTool(_id, "Diamond") {}
+    Diamond(int _id) : NonTool(_id, "DIAMOND") {}
 };
 
 #endif

@@ -22,8 +22,8 @@ protected:
     string material;  // black atau cobble
 public:
     Stone() : TypedNonTool(), material("none") {}
-    Stone(int _id, string _material) : TypedNonTool(_id, _material + "stone", "Stone"), material(_material) {}
-    Stone(int _id, string _name, string _material) : TypedNonTool(_id, _name, "Stone"), material(_material) {}
+    Stone(int _id, string _material) : TypedNonTool(_id, _material + "STONE", "STONE"), material(_material) {}
+    Stone(int _id, string _name, string _material) : TypedNonTool(_id, _name, "STONE"), material(_material) {}
     Stone(const Stone& other) : TypedNonTool(other) { material = other.material; }
     virtual string getType() const { return type; }
     void describe() const {
@@ -37,8 +37,8 @@ protected:
     string material;
 public:
     Log() : TypedNonTool(), material("none") {}
-    Log(int _id, string _material) : TypedNonTool(_id, _material + " Log", "Log"), material(_material) {}
-    Log(int _id, string _name, string _material) : TypedNonTool(_id, _name, "Log"), material(_material) {}
+    Log(int _id, string _material) : TypedNonTool(_id, _material + "_LOG", "LOG"), material(_material) {}
+    Log(int _id, string _name, string _material) : TypedNonTool(_id, _name, "LOG"), material(_material) {}
     Log(const Log& other) : TypedNonTool(other) { material = other.material; }
     virtual string getType() const { return name; }
     void describe() const {
@@ -52,8 +52,8 @@ protected:
     string material;
 public:
     Plank() : TypedNonTool(), material("none") {}
-    Plank(int _id, string _material) : TypedNonTool(_id, _material + " Plank", "Plank"), material(_material) {}
-    Plank(int _id, string _name, string _material) : TypedNonTool(_id, _name, "Plank"), material(_material) {}
+    Plank(int _id, string _material) : TypedNonTool(_id, _material + "_PLANK", "PLANK"), material(_material) {}
+    Plank(int _id, string _name, string _material) : TypedNonTool(_id, _name, "PLANK"), material(_material) {}
     Plank(const Plank& other) : TypedNonTool(other) { material = other.material; }
     virtual string getType() const { return type; }
     void describe() const {
