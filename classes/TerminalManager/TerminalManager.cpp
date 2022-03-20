@@ -5,6 +5,7 @@
 TerminalManager::TerminalManager() {;}
 
 vector<string> TerminalManager::readCommand() {
+    cout <<"INSERT COMMAND: ";
     vector<string> ret;
     string line;
     getline(cin, line);
