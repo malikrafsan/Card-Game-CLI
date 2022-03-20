@@ -7,11 +7,15 @@
 #include "../Item/NonTool.hpp"
 #include "../Item/TypedNonTool.hpp"
 #include<map>
+#include<set>
 
 class GameManager {
     private:
     Inventory inventory;
     Craft* craft;
+    set<string> tools;
+    set<string> nonTools;
+    set<array<string,2>> typedNonTools;
     map<string,int> mpNameId;
     map<int, Item*> mpIdItem;
     FileManager fileManager;
