@@ -6,7 +6,7 @@
 using namespace std;
 
 int main(){
-    Tool pickaxe1 = Tool(1, "IRON SWORD", "IRON");
+    Tool pickaxe1 = Tool(1, "IRON SWORD");
     pickaxe1.use();
     pickaxe1.use();
     pickaxe1.describe();
