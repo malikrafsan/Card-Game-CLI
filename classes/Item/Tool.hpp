@@ -2,7 +2,7 @@
 #define TOOL_HPP
 
 #include "Item.hpp"
-
+// Tool.hpp
 class Tool : public Item {
 protected:
     int durability;

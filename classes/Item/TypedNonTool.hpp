@@ -2,7 +2,7 @@
 #define TYPEDNONTOOL_HPP
 
 #include "NonTool.hpp"
-
+// TypedNonTool.hpp
 class TypedNonTool : public NonTool {
 protected:
     string type;
@@ -14,6 +14,11 @@ public:
     void describe() const {
         Item::describe();
         cout << "Type : " << type << endl;
+    }
+
+    virtual TypedNonTool *clone() const { 
+        TypedNonTool *clonedNonTool = new TypedNonTool(*this);
+        return clonedNonTool;
     }
 };
 

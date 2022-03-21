@@ -10,7 +10,7 @@ public:
     NonToolUseExeption() : _What("Non-tool item cannot be used") {}
     const char *what() const throw() { return _What.c_str(); }
 };
-
+// NonTool.hpp
 class NonTool : public Item {
 public:
     NonTool(int _id, string _name) : Item(_id, _name, false) {}
