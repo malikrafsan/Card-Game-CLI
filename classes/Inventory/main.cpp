@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Inventory.hpp"
 #include "../Item/NonTool.hpp"
+#include "../Item/TypedNonTool.hpp"
 #include "../Item/Tool.hpp"
 using namespace std;
 
@@ -8,33 +9,28 @@ int main(){
     try
     {
         Inventory inventory;
-        inventory.print();
-        cout << endl;
-        // Slot temp = inventory.removeItem(0, 0, 1);
-        inventory.addItem(new Diamond(1), 0, 0, 1);
-        inventory.print();
-        cout << endl;
-        inventory.addItem(new Stick(2), 2, 7, 5);
-        inventory.print();
-        cout << endl;
-        inventory.addItem(new IronIngot(3), 1, 1, 1);
-        inventory.print();
-        cout << endl;
+        cout << inventory << endl;
 
-        
-        inventory.addItem(new Axe(4, "Wood"), 1);
-        inventory.print();
-        cout << endl;
+        inventory.addItem(new NonTool(1, "Diamond"), 50);
+        cout << inventory << endl;
 
-        inventory.addItem(new Sword(5, "Wood"), 1);
-        inventory.print();
-        cout << endl;
+        inventory.addItem(new Tool(2, "Axe"), 1);
+        cout << inventory << endl;
 
-        inventory.use("I2");
-        inventory.remove("I1", 1);
-        inventory.print();
-        cout << endl;
+        inventory.addItem(new TypedNonTool(3, "Birch plank", "Plank"), 1);
+        cout << inventory << endl;
 
+        bool cek = inventory.isInvSlotValid("I0", 12);
+        cout << cek << endl;
+
+        cek = inventory.isInvSlotValid("I0", 60);
+        cout << cek << endl;
+
+        cek = inventory.canBeAdded(new NonTool(1, "Diamond"), "I0", 14);
+        cout << cek << endl;
+
+        cek = inventory.canBeAdded(new TypedNonTool(3, "Birch Log", "Log"), "I0", 60);
+        cout << cek << endl;
     }
     catch(const std::exception& e)
     {

@@ -15,9 +15,12 @@ class Craft : public Storage {
         Craft();
         Craft(vector<Recipe> recipes, map<int, Item*> mapItem, map<string, int> mapItemName);
 
-        void addItem(Item* item, int row, int col, int quantity);
-        Slot removeItem(int row, int col, int quantity);
-        void print() const;
+        void addItem(Item* item, string CRAFT_SLOT_ID, int quantity);
+        Slot removeItem(string CRAFT_SLOT_ID, int quantity);
+        friend ostream &operator<<( ostream &output, const Craft &craft);
+
+        bool isCrfSlotValid(string CRAFT_SLOT_ID, int quantity);
+        bool canBeAdded(Item* item, string CRAFT_SLOT_ID, int quantity);
 
         void crafting(); // TODO
 };

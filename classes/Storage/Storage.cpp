@@ -59,3 +59,8 @@ void Storage::move(Slot& src, Slot& dst, int quantity){
 Slot& Storage::operator[](int index){
     return this->arr[index];
 }
+
+Slot& Storage::operator[](string slotId){
+    int idx = stoi(slotId.substr(1));
+    return this->arr[idx];
+}

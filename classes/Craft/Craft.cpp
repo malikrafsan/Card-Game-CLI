@@ -9,25 +9,67 @@ Craft::Craft(vector<Recipe> recipes, map<int, Item*> mapItem, map<string, int> m
     this->mapItemName = mapItemName;
 }
 
-void Craft::addItem(Item* item, int row, int col, int quantity) {
-    this->arr[row*3 + col].add(item, quantity);
+void Craft::addItem(Item* item, string CRAFT_SLOT_ID, int quantity) {
+    if (CRAFT_SLOT_ID[0] != 'C') {
+        throw InvalidIDSlotException();
+    } else {
+        int idx = stoi(CRAFT_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            this->arr[idx].add(item, quantity);
+        }
+    }
 }
 
-Slot Craft::removeItem(int row, int col, int quantity) {
-    return this->arr[row*3 + col].remove(quantity);
+Slot Craft::removeItem(string CRAFT_SLOT_ID, int quantity) {
+    if (CRAFT_SLOT_ID[0] != 'C') {
+        throw InvalidIDSlotException();
+    } else {
+        int idx = stoi(CRAFT_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            return this->arr[idx].remove(quantity);
+        }
+    }
 }
 
-void Craft::print() const {
-    for (int i = 0; i < this->row; i++) {
-        for (int j = 0; j < this->col; j++) {
-            if (this->arr[i*this->col + j].getItem() == NULL) {
-                cout << "\t[]";
+bool Craft::isCrfSlotValid(string CRAFT_SLOT_ID, int quantity) {
+    if (CRAFT_SLOT_ID[0] != 'C') {
+        return false;
+    } else {
+        int idx = stoi(CRAFT_SLOT_ID.substr(1));
+        if (idx < 0 || idx >= this->row*this->col) {
+            throw InvalidIDSlotException();
+        } else {
+            if (this->arr[idx].getItem() != NULL) {
+                return (this->arr[idx].getQuantity() >= quantity);
             } else {
-                cout << "\t[" << this->arr[i*this->col + j].getItem()->getId();
-                cout << "," << this->arr[i*this->col + j].getQuantity() << "]";
+                return false;
             }
         }
-        cout << endl;
+    }
+}
+
+bool Craft::canBeAdded(Item* item, string CRAFT_SLOT_ID, int quantity) {
+    if (CRAFT_SLOT_ID[0] != 'C') {
+        return false;
+    } else {
+        int idx = stoi(CRAFT_SLOT_ID.substr(1));
+        if (idx >= 0 && idx < this->row*this->col) {
+            if (this->arr[idx].getItem() != NULL) {
+                if (this->arr[idx].getItem()->getId() == item->getId()) {
+                    return (!this->arr[idx].getItem()->isTool && this->arr[idx].getQuantity() + quantity <= 64);
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            throw InvalidIDSlotException();
+        }
     }
 }
 
@@ -84,4 +126,19 @@ void Craft::crafting() {
             }
         }
     }
+}
+
+ostream &operator<<( ostream &output, const Craft &craft) {
+    for (int i = 0; i < craft.row; i++) {
+        for (int j = 0; j < craft.col; j++) {
+            if (craft.arr[i*craft.col + j].getItem() == NULL) {
+                cout << "\t[C" << i*craft.col + j << "]\t";
+            } else {
+                cout << "\t[C" << i*craft.col + j << ": " << craft.arr[i*craft.col + j].getItem()->getId();
+                cout << "," << craft.arr[i*craft.col + j].getQuantity() << "]";
+            }
+        }
+        cout << endl;
+    }
+    return output;
 }
