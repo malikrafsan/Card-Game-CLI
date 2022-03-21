@@ -68,7 +68,7 @@ void GameManager::play() {
             } else if(command[0]=="MOVE") {
                 moveCommand(command);
             } else if(command[0]=="CRAFT") {
-
+                craftCommand(command);
             } else if(command[0]=="USE") {
                 useCommand(command);
             } else if(command[0]=="EXPORT") {
@@ -186,21 +186,39 @@ void GameManager::moveCommand(vector<string> command) {
 }
 
 void GameManager::craftCommand(vector<string> command) {
-
+    try {
+        if((int)command.size()==1) {
+            // Slot* result = craft->crafting();
+            // crafting berhasil, pindahkan result ke inventory seperti give
+            // delete result
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
+    }
 }
 
 void GameManager::useCommand(vector<string> command) {
-    if((int)command.size()==2) {
-        inventory.use(command[1]);
-    } else {
-        ;
+    try {
+        if((int)command.size()==2) {
+            inventory.use(command[1]);
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
     }
 }
 
 void GameManager::exportCommand(vector<string> command) {
-    if((int)command.size()==2) {
-        fileManager.write(command[1], inventory.exportInventory());
-    } else {
-        ;
+    try {
+        if((int)command.size()==2) {
+            fileManager.write(command[1], inventory.exportInventory());
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
     }
 }
