@@ -73,7 +73,57 @@ bool Craft::canBeAdded(Item* item, string CRAFT_SLOT_ID, int quantity) {
     }
 }
 
-void Craft::crafting() {
+Slot* Craft::craft() {
+    Slot* craftTool = this->craftTool();
+
+    if (craftTool != NULL) {
+        return craftTool;
+    }
+    return this->craftNonTool();
+}
+
+Slot* Craft::craftTool() {
+    vector<int> idxCrafted;
+    int totalDurability = 0;
+
+    for (int i = 0; i < this->row; i++) {
+        for (int j = 0; j < this->col; j++) {
+            Item* curItem = this->arr[(i * this->row) + j].getItem();
+
+            if (curItem != NULL) {
+                if (!curItem->isTool) {
+                    return NULL;
+                }
+
+                Tool& tool = static_cast<Tool&>(*curItem);
+                
+                if (idxCrafted.empty()) {
+                    idxCrafted.push_back((i * this->row) + j);
+                    totalDurability += tool.getDurability();
+                } else {
+                    if (tool.getId() == this->arr[idxCrafted[0]].getItem()->getId()) {
+                        idxCrafted.push_back((i * this->row) + j);
+                        totalDurability += tool.getDurability();
+                    } else {
+                        return NULL;
+                    }
+                }
+            }
+        }
+    }
+    Item* item = this->arr[idxCrafted[0]].getItem();
+    Tool* newTool = new Tool(item->getId(), item->getName(), totalDurability >= 10 ? 10 : totalDurability);
+
+    Slot* res = new Slot(newTool, 1);
+
+    for (int i = 0; i < idxCrafted.size(); i++) {
+        this->arr[idxCrafted[i]].remove(1);
+    }
+
+    return res;
+}
+
+Slot* Craft::craftNonTool() {
     int rowRecipe, colRecipe, rowCraft, colCraft, ii, jj;
     int i = -1;
     bool found = false;
@@ -126,6 +176,12 @@ void Craft::crafting() {
             }
         }
     }
+
+    // TODO: create new Object
+    if (0) {
+        return new Slot();
+    }
+    throw CannotCraftExceptions();
 }
 
 ostream &operator<<( ostream &output, const Craft &craft) {
