@@ -23,8 +23,6 @@ GameManager::GameManager() {
         } else {
             ;
         }
-        // perlu ada exception id bukan int, 1 line kurang dari 4 kata ga?
-        // kalo mau yg selain 24 item awal, kyknya bisa cek name gak ada di set 27 terus bikin sendiri
     }
     for(string name: tools) {
         Tool* tool = new Tool(mpNameId[name],name);
@@ -59,104 +57,131 @@ GameManager::~GameManager() {
 void GameManager::play() {
     bool isExit=false;
     while(!isExit) {
-        craft->print();
-        inventory.print();
+        cout <<(*craft) <<"\n";
+        cout <<inventory <<"\n";
         vector<string> command = terminalManager.readCommand();
-        if(command[0]=="GIVE") {
-            giveCommand(command);
-        } else if(command[0]=="DISCARD") {
-            discardCommand(command);
-        } else if(command[0]=="MOVE") {
-            moveCommand(command);
-        } else if(command[0]=="CRAFT") {
+        try{
+            if(command[0]=="GIVE") {
+                giveCommand(command);
+            } else if(command[0]=="DISCARD") {
+                discardCommand(command);
+            } else if(command[0]=="MOVE") {
+                moveCommand(command);
+            } else if(command[0]=="CRAFT") {
 
-        } else if(command[0]=="USE") {
-            useCommand(command);
-        } else if(command[0]=="EXPORT") {
-            exportCommand(command);
-        } else {
-            // throw invalid command exception
+            } else if(command[0]=="USE") {
+                useCommand(command);
+            } else if(command[0]=="EXPORT") {
+                exportCommand(command);
+            } else {
+                throw InvalidCommandException(command[0]);
+            }
+        } catch(const exception &e) {
+            cout << "EXCEPTION: " << e.what() <<"\n";
         }
     }    
 }
 
 void GameManager::giveCommand(vector<string> command) {
-    if((int)command.size() == 3) {
-        string name = command[1];
-        int qty = stoi(command[2]);
-        inventory.addItem(mpIdItem[mpNameId[name]], qty);
-    } else {
-        ;
+    try {
+        if((int)command.size() == 3) {
+            string name = command[1];
+            int qty = stoi(command[2]);
+            auto nid = mpNameId.find(name);
+            if(nid==mpNameId.end()) {
+                throw ItemNotFoundException(name);
+            }
+            auto iditem = mpIdItem.find(nid->second);
+            if(iditem==mpIdItem.end()) {
+                throw ItemNotFoundException(name);
+            }
+            inventory.addItem(iditem->second, qty);
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
     }
 }
 
 void GameManager::discardCommand(vector<string> command) {
-    if((int)command.size() == 3) {
-        int qty = stoi(command[2]);
-        inventory.remove(command[1], qty);
-    } else {
-        ;
+    try {
+        if((int)command.size() == 3) {
+            int qty = stoi(command[2]);
+            inventory.remove(command[1], qty);
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
     }
 }
 
 void GameManager::moveCommand(vector<string> command) {
-    if((int)command.size()>=4) {
-        int ctTarget = stoi(command[2]);
-        if(ctTarget+3==(int)command.size()) {
-            bool srcInvValid, srcCrfValid, allTargetInvValid, allTargetCrfValid;
-            srcInvValid = inventory.isInvSlotValid(command[1], ctTarget);
-            srcCrfValid = craft->isCrfSlotValid(command[1], ctTarget);
-            allTargetInvValid = true;
-            allTargetCrfValid = true;
-            // dapetin item src dulu atau keluarin exception command move ga valid
-            // cek canBeAdded inventory sm craft.
-            for(int i=3;i<(int)command.size();i++) {
-                allTargetInvValid &= inventory.isInvSlotValid(command[i]);
-                allTargetCrfValid &= craft->isCrfSlotValid(command[i]);
-            }
-
-            if(srcInvValid && allTargetInvValid) {
-                if(ctTarget==1) {
-                    // numpuk sampe target 64
+    try {
+        if((int)command.size()>=4) {
+            int ctTarget = stoi(command[2]);
+            if(ctTarget+3==(int)command.size()) {
+                bool srcInvValid, srcCrfValid, allTargetInvValid, allTargetCrfValid;
+                srcInvValid = inventory.isInvSlotValid(command[1], ctTarget);
+                srcCrfValid = craft->isCrfSlotValid(command[1], ctTarget);
+                allTargetInvValid = true;
+                allTargetCrfValid = true;
+                Item* item;
+                // dapetin item src dulu atau keluarin exception command move ga valid
+                // cek canBeAdded inventory sm craft.
+                if(srcInvValid) {
+                    item = inventory[command[1]].getItem()->clone();
+                } else if(srcCrfValid) {
+                    item = (*craft)[command[1]].getItem()->clone();
                 } else {
-                    ;
+                    throw InvalidCommandException(command[0]);
                 }
-            } else if(srcInvValid && allTargetCrfValid) {
-                Item* item = inventory[command[1]]; // atau inventory.getItem(INV_SLOT_ID)
-                bool flag=true;
-                for(int i=3;i<(int)command.size();i++) {
-                    flag &= craft->canBeAdded(item,command[i],1); // asumsi craft_slot_id beda semua hmm
-                }
-                if(flag) {
-                    inventory.remove(command[1],ctTarget);
+                try {
                     for(int i=3;i<(int)command.size();i++) {
-                        craft->addItem(item, command[i], 1); // harus bisa nambah item berdasarkan slot_id
+                        allTargetInvValid &= inventory.canBeAdded(item,command[i],1);
+                        allTargetCrfValid &= craft->canBeAdded(item,command[i],1);
                     }
-                } else {
-                    ;
-                }
-            } else if(srcCrfValid && allTargetInvValid) {
-                if(ctTarget==1) {
-                    // ini dari Craft dipindah 1 atau pindah semua atau pindah sebisa mungkin.
-                    // kalo pindah 1 aja
-                    if(craft->canBeRemoved(1)) {
-                        Item* item = (*craft)[command[1]]; // atau craft->getItem(CRF_SLOT_ID)
-                        if(inventory.canBeAdded(item,command[3],1)) {
-                            craft->remove(command[1],1);
-                            inventory.addItem(item, command[3], 1);
+
+                    if(srcInvValid && allTargetInvValid) {
+                        if(ctTarget==1) {
+                            // numpuk sampe target 64
+                            while(inventory.isInvSlotValid(command[1],1) && inventory.canBeAdded(item,command[3],1)) {
+                                inventory.remove(command[1],1);
+                                inventory.addItem(item,command[3],1);
+                            }
+                        } else {
+                            throw InvalidCommandException(command[0]);
                         }
+                    } else if(srcInvValid && allTargetCrfValid) {
+                        // asumsi craft_slot_id beda semua
+                        inventory.remove(command[1],ctTarget);
+                        for(int i=3;i<(int)command.size();i++) {
+                            craft->addItem(item,command[i],1);
+                        }
+                    } else if(srcCrfValid && allTargetInvValid) {
+                        if(ctTarget==1) {
+                            // Dari craft ke Inventory disamakan dengan inventory ke craft yaitu satu item dipindahkan
+                            craft->removeItem(command[1],1);
+                            inventory.addItem(item,command[3],1);
+                        } else {
+                            throw InvalidCommandException(command[0]);
+                        }
+                    } else {
+                        throw InvalidCommandException(command[0]);
                     }
-                } else {
-                    ;
+                } catch(const exception& e) {
+                    delete item;
+                    throw; // rethrow original object
                 }
             } else {
-                ;
+                throw InvalidCommandException(command[0]);
             }
         } else {
-            ;
+            throw InvalidCommandException(command[0]);
         }
-    } else {
-        ;
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
     }
 }
 

@@ -35,4 +35,24 @@ class GameManager {
     void exportCommand(vector<string> command);
 };
 
+class InvalidCommandException : public exception {
+    private:
+    string _What;
+    public:
+    InvalidCommandException(string command) {
+        _What = "INVALID COMMAND "+command;
+    }
+    const char *what() const throw() { return _What.c_str();}
+};
+
+class ItemNotFoundException: public exception {
+    private:
+    string _What;
+    public:
+    ItemNotFoundException(string name) {
+        _What = "Item " + name + " not found";
+    }
+    const char *what() const throw() { return _What.c_str();}
+};
+
 #endif
