@@ -9,6 +9,7 @@ protected:
 public:
     Tool() : Item(), durability(-1) {}
     Tool(int _id, string _name) : Item(_id, _name, true), durability(10) {}
+    Tool(int _id, string _name, int durability) : Item(_id, _name, durability), durability(durability) {}
     Tool(const Tool& other) : Item(other) { durability = other.durability; }
     void use() { durability--; }; 
 
