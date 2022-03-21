@@ -114,7 +114,12 @@ void Slot::print() const {
 
 string Slot::exportItem() const {
     if (this->item != NULL) {
-        return to_string(this->item->getId()) + ":" + to_string(quantity);
+        if (this->item->isTool) {
+            Tool &tool = static_cast<Tool&>(*this->item);
+            return to_string(this->item->getId()) + ":" + to_string(tool.getDurability());
+        } else {
+            return to_string(this->item->getId()) + ":" + to_string(this->quantity);
+        }
     } else {
         return "0:0";
     }
