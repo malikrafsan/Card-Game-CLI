@@ -62,4 +62,11 @@ class ToolItemStackedException : public exception {
         }
 };
 
+class InvalidQuantityException : public exception {
+    public:
+        const char *what() const throw() {
+            return "Quantity must be greater than 0";
+        }
+};
+
 #endif

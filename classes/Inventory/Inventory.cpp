@@ -3,28 +3,62 @@
 
 Inventory::Inventory() : Storage(3,9) {}
 
-void Inventory::addItem(Item* item, int quantity) {
-    int idx = -1;
+void Inventory::give(Item* item, int quantity) {
+    if (item == NULL)
+        throw SlotEmptyException();
 
-    for (int i = 0; i < this->row*this->col; i++) {
-        if (this->arr[i].getItem() != NULL){
-            if (this->arr[i].getItem()->getId() == item->getId()) {
-                // Menambahkan item nontool
-                if (!this->arr[i].getItem()->isTool && this->arr[i].getQuantity() + quantity < 64) {
-                    this->arr[i].add(item, quantity);
-                    return;
+    if (quantity <= 0)
+        throw InvalidQuantityException();
+
+    if (item->isTool) {
+        int i = 0;
+        while (i < this->row*this->col && quantity > 0) {
+            if (this->arr[i].getItem() == NULL) {
+                this->arr[i].add(item,1);
+                quantity--;
+            }
+            i++;
+        }
+    } else {
+        int idx = -1, i = 0;
+        while (i < this->row*this->col && quantity > 0) {
+            if (this->arr[i].getItem() == NULL) {
+                if (idx == -1)
+                    idx = i;
+            } else {
+                if (this->arr[i].getItem()->getId() == item->getId()) {
+                    int quantityAvailable = 64 - this->arr[i].getQuantity();
+                    if (quantity <= quantityAvailable) {
+                        this->arr[i].add(item, quantity);
+                        quantity = 0;
+                    } else {
+                        this->arr[i].add(item, quantityAvailable);
+                        quantity -= quantityAvailable;
+                    }
                 }
             }
-        } else {
-            if (idx == -1)
-                idx = i;
+            i++;
         }
-    }
-    
-    if (idx == -1){
-        throw InventoryFullException();
-    } else {
-        this->arr[idx].add(item, quantity);
+
+        if (quantity >= 0 && idx == -1)
+            return;
+        
+        if (idx == -1)
+            return;
+
+        i = 0;
+        while (quantity > 0 && i < this->row*this->col) {
+            if (this->arr[i].getItem() == NULL) {
+                if (quantity > 64) {
+                    this->arr[i].add(item, 64);
+                    quantity -= 64;
+                } else {
+                    this->arr[i].add(item, quantity);
+                    quantity = 0;
+                }
+            }
+            i++;
+        }
     }
 }
 

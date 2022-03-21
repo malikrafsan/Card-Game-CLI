@@ -38,22 +38,8 @@ Storage::~Storage(){
 }
 
 void Storage::move(Slot& src, Slot& dst, int quantity){
-    // Belum jalan, nunggu method remove di slot.cpp
-
     Slot temp = src.remove(quantity);
     dst.add(temp);
-
-    // try
-    // {
-    //     Slot temp = src.remove(quantity);
-    //     cout << "Cek Slot" << endl;
-    //     temp.print();
-    //     dst.add(temp);
-    // }
-    // catch(const std::exception& e)
-    // {
-    //     cout << e.what() << endl;
-    // }
 }
 
 Slot& Storage::operator[](int index){

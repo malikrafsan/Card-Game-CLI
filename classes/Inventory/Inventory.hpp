@@ -8,7 +8,7 @@ class Inventory : public Storage {
     public:
         Inventory();
 
-        void addItem(Item* item, int quantity);
+        void give(Item* item, int quantity);
         void addItem(Item* item, string INV_SLOT_ID, int quantity);
         Slot removeItem(string INV_SLOT_ID, int quantity);
         friend ostream &operator<<( ostream &output, const Inventory &inventory);
@@ -19,13 +19,6 @@ class Inventory : public Storage {
         bool isInvSlotValid(string INV_SLOT_ID, int quantity);
         bool canBeAdded(Item* item, string INV_SLOT_ID, int quantity);
         vector<string> exportInventory();
-};
-
-class InventoryFullException : public exception {
-    public:
-        const char *what() const throw() {
-            return "This inventory is full";
-        }
 };
 
 #endif

@@ -9,16 +9,16 @@ int main(){
     try
     {
         Inventory inventory;
-        cout << inventory << endl;
+        // cout << inventory << endl;
 
-        inventory.addItem(new NonTool(1, "Diamond"), 50);
-        cout << inventory << endl;
+        inventory.give(new NonTool(1, "Diamond"), 50);
+        // cout << inventory << endl;
 
-        inventory.addItem(new Tool(2, "Axe"), 1);
-        cout << inventory << endl;
+        inventory.give(new Tool(2, "Axe"), 1);
+        // cout << inventory << endl;
 
-        inventory.addItem(new TypedNonTool(3, "Birch plank", "Plank"), 1);
-        cout << inventory << endl;
+        inventory.give(new TypedNonTool(3, "Birch_Plank", "Plank"), 1);
+        // cout << inventory << endl;
 
         // bool cek = inventory.isInvSlotValid("I0", 12);
         // cout << cek << endl;
@@ -32,11 +32,17 @@ int main(){
         // cek = inventory.canBeAdded(new TypedNonTool(3, "Birch Log", "Log"), "I0", 60);
         // cout << cek << endl;
 
-        inventory.use("I1");
+        // inventory.use("I1");
+        // cout << inventory << endl;
+        
+        // inventory.use("I1");
+        // cout << inventory << endl;
+
+        inventory.give(new NonTool(1, "Diamond"), 50);
+        inventory.give(new Tool(2, "Axe"), 20);
         cout << inventory << endl;
 
-        
-        inventory.use("I1");
+        inventory.give(new TypedNonTool(3, "Birch_Plank", "Plank"), 150);
         cout << inventory << endl;
     }
     catch(const std::exception& e)
