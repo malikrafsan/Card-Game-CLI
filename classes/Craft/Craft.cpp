@@ -129,13 +129,27 @@ void Craft::crafting() {
 }
 
 ostream &operator<<( ostream &output, const Craft &craft) {
+    output << "Craft:" << endl;
     for (int i = 0; i < craft.row; i++) {
         for (int j = 0; j < craft.col; j++) {
-            if (craft.arr[i*craft.col + j].getItem() == NULL) {
-                cout << "\t[C" << i*craft.col + j << "]\t";
+            int idx = i*craft.col + j;
+            Item* temp = craft.arr[idx].getItem();
+            if (temp == NULL) {
+                output << "[C" << idx << "]\t\t\t";
             } else {
-                cout << "\t[C" << i*craft.col + j << ": " << craft.arr[i*craft.col + j].getItem()->getId();
-                cout << "," << craft.arr[i*craft.col + j].getQuantity() << "]";
+                if (temp->isTool) {
+                    Tool &tool = static_cast<Tool&>(*temp);
+                    string out = "\033[31m[C" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m\t";
+
+                    if (out.length() < 27)
+                        out += "\t";
+                    output << out;
+                } else {
+                    string out = "\033[32m[C" + to_string(idx) + ": " + temp->getName() + " " + to_string(craft.arr[idx].getQuantity()) + "]\033[0m\t";
+                    if (out.length() < 27)
+                        out += "\t";
+                    output << out;
+                }
             }
         }
         cout << endl;

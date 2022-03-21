@@ -63,8 +63,11 @@ void Inventory::use(string INV_SLOT_ID) {
             throw InvalidIDSlotException();
         } else {
             if (this->arr[idx].getItem() != NULL) {
-                Tool *tool = static_cast<Tool*>(this->arr[idx].getItem());
-                tool->use();
+                Tool &tool = static_cast<Tool&>(*this->arr[idx].getItem());
+                tool.use();
+                if (tool.getDurability() == 0) {
+                    this->arr[idx].remove(1);
+                }
             } else {
                 throw SlotEmptyException();
             }
@@ -133,13 +136,27 @@ bool Inventory::canBeAdded(Item* item, string INV_SLOT_ID, int quantity) {
 }
 
 ostream &operator<<( ostream &output, const Inventory &inventory) {
+    output << "Inventory:" << endl;
     for (int i = 0; i < inventory.row; i++) {
         for (int j = 0; j < inventory.col; j++) {
-            if (inventory.arr[i*inventory.col + j].getItem() == NULL) {
-                output << "\t[I" << i*inventory.col + j << "]\t";
+            int idx = i*inventory.col + j;
+            Item* temp = inventory.arr[idx].getItem();
+            if (temp == NULL) {
+                output << "[I" << idx << "]\t\t\t";
             } else {
-                output << "\t[I" << i*inventory.col + j << ": " << inventory.arr[i*inventory.col + j].getItem()->getId();
-                output << "," << inventory.arr[i*inventory.col + j].getQuantity() << "]";
+                if (temp->isTool) {
+                    Tool &tool = static_cast<Tool&>(*temp);
+                    string out = "\033[31m[I" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m\t";
+
+                    if (out.length() < 27)
+                        out += "\t";
+                    output << out;
+                } else {
+                    string out = "\033[32m[I" + to_string(idx) + ": " + temp->getName() + " " + to_string(inventory.arr[idx].getQuantity()) + "]\033[0m\t";
+                    if (out.length() < 27)
+                        out += "\t";
+                    output << out;
+                }
             }
         }
         output << endl;

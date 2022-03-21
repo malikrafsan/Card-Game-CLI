@@ -20,17 +20,24 @@ int main(){
         inventory.addItem(new TypedNonTool(3, "Birch plank", "Plank"), 1);
         cout << inventory << endl;
 
-        bool cek = inventory.isInvSlotValid("I0", 12);
-        cout << cek << endl;
+        // bool cek = inventory.isInvSlotValid("I0", 12);
+        // cout << cek << endl;
 
-        cek = inventory.isInvSlotValid("I0", 60);
-        cout << cek << endl;
+        // cek = inventory.isInvSlotValid("I0", 60);
+        // cout << cek << endl;
 
-        cek = inventory.canBeAdded(new NonTool(1, "Diamond"), "I0", 14);
-        cout << cek << endl;
+        // cek = inventory.canBeAdded(new NonTool(1, "Diamond"), "I0", 14);
+        // cout << cek << endl;
 
-        cek = inventory.canBeAdded(new TypedNonTool(3, "Birch Log", "Log"), "I0", 60);
-        cout << cek << endl;
+        // cek = inventory.canBeAdded(new TypedNonTool(3, "Birch Log", "Log"), "I0", 60);
+        // cout << cek << endl;
+
+        inventory.use("I1");
+        cout << inventory << endl;
+
+        
+        inventory.use("I1");
+        cout << inventory << endl;
     }
     catch(const std::exception& e)
     {
