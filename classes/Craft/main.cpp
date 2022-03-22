@@ -47,7 +47,7 @@ void testCraftToolFailedBecauseNonToolExist() {
 
     Slot* res = craft.craft();
     // inv.move(*res, inv[0], 1);
-    inv.addItem(res->getItem(), res->getQuantity());
+    inv.give(res->getItem(), res->getQuantity());
     delete res;
 
     cout << craft << endl;
@@ -113,7 +113,7 @@ void testCraftToolSuccess() {
 
     Slot* res = craft.craft();
     // inv.move(*res, inv[0], 1);
-    inv.addItem(res->getItem(), res->getQuantity());
+    inv.give(res->getItem(), res->getQuantity());
     delete res;
 
     cout << craft << endl;
@@ -128,7 +128,7 @@ void testCraftToolSuccess() {
     printDivider();
 
     Slot* res2 = craft.craft();
-    inv.addItem(res2->getItem(), res2->getQuantity());
+    inv.give(res2->getItem(), res2->getQuantity());
     delete res2;
 
     cout << craft << endl;

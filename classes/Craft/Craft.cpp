@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "Craft.hpp"
 
 Craft::Craft() : Storage(3,3) {}
@@ -190,21 +191,18 @@ ostream &operator<<( ostream &output, const Craft &craft) {
         for (int j = 0; j < craft.col; j++) {
             int idx = i*craft.col + j;
             Item* temp = craft.arr[idx].getItem();
+            string out;
             if (temp == NULL) {
-                output << "[C" << idx << "]\t\t\t";
+                out = "[C" + to_string(idx) + "]";
+                output << setw(27) << setfill(' ') << left << out;
             } else {
                 if (temp->isTool) {
                     Tool &tool = static_cast<Tool&>(*temp);
-                    string out = "\033[31m[C" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m\t";
-
-                    if (out.length() < 27)
-                        out += "\t";
-                    output << out;
+                    out = "\033[34m[C" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m";
+                    output << setw(36) << setfill(' ') << left << out;
                 } else {
-                    string out = "\033[32m[C" + to_string(idx) + ": " + temp->getName() + " " + to_string(craft.arr[idx].getQuantity()) + "]\033[0m\t";
-                    if (out.length() < 27)
-                        out += "\t";
-                    output << out;
+                    out = "\033[32m[C" + to_string(idx) + ": " + temp->getName() + " " + to_string(craft.arr[idx].getQuantity()) + "]\033[0m";
+                    output << setw(36) << setfill(' ') << left << out;
                 }
             }
         }

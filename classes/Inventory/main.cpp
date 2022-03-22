@@ -9,7 +9,7 @@ int main(){
     try
     {
         Inventory inventory;
-        // cout << inventory << endl;
+        cout << inventory << endl;
 
         inventory.give(new NonTool(1, "Diamond"), 50);
         // cout << inventory << endl;

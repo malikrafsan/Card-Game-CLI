@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "Inventory.hpp"
 
 Inventory::Inventory() : Storage(3,9) {}
@@ -175,21 +176,18 @@ ostream &operator<<( ostream &output, const Inventory &inventory) {
         for (int j = 0; j < inventory.col; j++) {
             int idx = i*inventory.col + j;
             Item* temp = inventory.arr[idx].getItem();
+            string out;
             if (temp == NULL) {
-                output << "[I" << idx << "]\t\t\t";
+                out = "[I" + to_string(idx) + "]";
+                output << setw(27) << setfill(' ') << left << out;
             } else {
                 if (temp->isTool) {
                     Tool &tool = static_cast<Tool&>(*temp);
-                    string out = "\033[31m[I" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m\t";
-
-                    if (out.length() < 27)
-                        out += "\t";
-                    output << out;
+                    out = "\033[34m[I" + to_string(idx) + ": " + tool.getName() + " (" + to_string(tool.getDurability()) + ")" + "]\033[0m";
+                    output << setw(36) << setfill(' ') << left << out;
                 } else {
-                    string out = "\033[32m[I" + to_string(idx) + ": " + temp->getName() + " " + to_string(inventory.arr[idx].getQuantity()) + "]\033[0m\t";
-                    if (out.length() < 27)
-                        out += "\t";
-                    output << out;
+                    out = "\033[32m[I" + to_string(idx) + ": " + temp->getName() + " " + to_string(inventory.arr[idx].getQuantity()) + "]\033[0m";
+                    output << setw(36) << setfill(' ') << left << out;
                 }
             }
         }
