@@ -73,6 +73,10 @@ void GameManager::play() {
                 useCommand(command);
             } else if(command[0]=="EXPORT") {
                 exportCommand(command);
+            } else if(command[0]=="HELP") {
+                helpCommand(command);
+            } else if(command[0]=="EXIT"){
+                isExit=true;
             } else {
                 throw InvalidCommandException(command[0]);
             }
@@ -95,7 +99,7 @@ void GameManager::giveCommand(vector<string> command) {
             if(iditem==mpIdItem.end()) {
                 throw ItemNotFoundException(name);
             }
-            inventory.addItem(iditem->second, qty);
+            inventory.give(iditem->second, qty);
         } else {
             throw InvalidCommandException(command[0]);
         }
@@ -188,9 +192,11 @@ void GameManager::moveCommand(vector<string> command) {
 void GameManager::craftCommand(vector<string> command) {
     try {
         if((int)command.size()==1) {
-            // Slot* result = craft->crafting();
+            Slot* result = craft->craft();
             // crafting berhasil, pindahkan result ke inventory seperti give
             // delete result
+            inventory.give(result->getItem(),result->getQuantity());
+            delete result;
         } else {
             throw InvalidCommandException(command[0]);
         }
@@ -215,6 +221,48 @@ void GameManager::exportCommand(vector<string> command) {
     try {
         if((int)command.size()==2) {
             fileManager.write(command[1], inventory.exportInventory());
+        } else {
+            throw InvalidCommandException(command[0]);
+        }
+    } catch(const exception& e) {
+        cout <<"EXCEPTION: " <<e.what() <<"\n";
+    }
+}
+
+void GameManager::helpCommand(vector<string> command) {
+    try {
+        if((int)command.size()==1) {
+            cout <<"available command:\n\n";
+
+            cout <<"GIVE <name> <qty>\n";
+            cout <<"-> add items <name> to inventory with quantity up to <qty> as many as possible\n\n";
+
+            cout <<"DISCARD <INV_SLOT_ID> <qty>\n";
+            cout <<"-> discard <qty> items from inventory slot <INV_SLOT_ID>\n\n";
+
+            cout <<"MOVE <SRC_INV_SLOT_ID> 1 <DEST_INV_SLOT_ID>\n";
+            cout <<"-> stack nontool items from inventory slot <SRC_INV_SLOT_ID> to inventory slot <DEST_INV_SLOT_ID> up to max capacity (64)\n\n";
+
+            cout <<"MOVE <SRC_INV_SLOT_ID> N <DEST_CRF_SLOT_ID_1> .. <DEST_CRF_SLOT_ID_N>\n";
+            cout <<"-> move N items from inventory slot <SRC_INV_SLOT_ID> to N crafting slot <DEST_CRF_SLOT_ID_1>, .., <DEST_CRF_SLOT_ID_N> (and stack if necessary)\n\n";
+
+            cout <<"MOVE <SRC_CRF_SLOT_ID> 1 <DEST_INV_SLOT_ID>\n";
+            cout <<"-> move 1 item from crafting slot <SRC_CRF_SLOT_ID> to inventory slot <DEST_INV_SLOT_ID>\n\n";
+
+            cout <<"CRAFT\n";
+            cout <<"-> craft items from crafting table and give the result to inventory\n\n";
+
+            cout <<"USE <INV_SLOT_ID>\n";
+            cout <<"-> use and subtract durability from tool item in inventory slot <INV_SLOT_ID>. If durability reach 0, tool vanish from inventory slot.\n\n";
+
+            cout <<"EXPORT <FILE_PATH>\n";
+            cout <<"-> export inventory to file path <FILE_PATH>\n\n";
+
+            cout <<"EXIT\n";
+            cout <<"-> exit program\n\n";
+            
+            cout <<"HELP\n";
+            cout <<"-> show this message\n\n";
         } else {
             throw InvalidCommandException(command[0]);
         }

@@ -33,6 +33,7 @@ class GameManager {
     void craftCommand(vector<string> command);
     void useCommand(vector<string> command);
     void exportCommand(vector<string> command);
+    void helpCommand(vector<string> command);
 };
 
 class InvalidCommandException : public exception {
