@@ -37,6 +37,10 @@ int Recipe::getRow() const {
   return (this->row);
 }
 
+string Recipe::getResult() const {
+  return (this->result);
+}
+
 vector<string> Recipe::getItems() const {
   return (this->items);
 }
