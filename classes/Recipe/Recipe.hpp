@@ -9,7 +9,7 @@
 using namespace std;
 
 class Recipe {
-protected:
+private:
   int row;
   int col;
   vector<string> items;
