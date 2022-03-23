@@ -14,7 +14,7 @@ public:
 class NonTool : public Item {
 public:
     NonTool(int _id, string _name) : Item(_id, _name, false) {}
-
+    NonTool(const NonTool &other) : Item(other) {}
     virtual NonTool *clone() const { 
         NonTool *clonedNonTool = new NonTool(*this);
         return clonedNonTool;
