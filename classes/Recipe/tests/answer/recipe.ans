@@ -1,0 +1,164 @@
+Recipe: 1x1
+Items: 
+BIRCH_LOG 
+Result: BIRCH_PLANK 4
+
+Recipe: 2x2
+Items: 
+PLANK PLANK 
+PLANK PLANK 
+Result: CRAFTING_TABLE 1
+
+Recipe: 3x3
+Items: 
+DIAMOND DIAMOND - 
+DIAMOND STICK - 
+- STICK - 
+Result: DIAMOND_AXE 1
+
+Recipe: 3x3
+Items: 
+DIAMOND DIAMOND DIAMOND 
+- STICK - 
+- STICK - 
+Result: DIAMOND_PICKAXE 1
+
+Recipe: 3x3
+Items: 
+- DIAMOND - 
+- DIAMOND - 
+- STICK - 
+Result: DIAMOND_SWORD 1
+
+Recipe: 3x3
+Items: 
+STONE STONE STONE 
+STONE - STONE 
+STONE STONE STONE 
+Result: FURNACE 1
+
+Recipe: 3x3
+Items: 
+IRON_INGOT IRON_INGOT - 
+IRON_INGOT STICK - 
+- STICK - 
+Result: IRON_AXE 1
+
+Recipe: 2x3
+Items: 
+IRON_INGOT IRON_INGOT IRON_INGOT 
+IRON_INGOT IRON_INGOT IRON_INGOT 
+Result: IRON_BARS 16
+
+Recipe: 3x3
+Items: 
+IRON_NUGGET IRON_NUGGET IRON_NUGGET 
+IRON_NUGGET IRON_NUGGET IRON_NUGGET 
+IRON_NUGGET IRON_NUGGET IRON_NUGGET 
+Result: IRON_INGOT 1
+
+Recipe: 1x1
+Items: 
+IRON_INGOT 
+Result: IRON_NUGGET 9
+
+Recipe: 3x3
+Items: 
+IRON_INGOT IRON_INGOT IRON_INGOT 
+- STICK - 
+- STICK - 
+Result: IRON_PICKAXE 1
+
+Recipe: 3x3
+Items: 
+- IRON_INGOT - 
+- IRON_INGOT - 
+- STICK - 
+Result: IRON_SWORD 1
+
+Recipe: 3x3
+Items: 
+STICK - STICK 
+STICK STICK STICK 
+STICK - STICK 
+Result: LADDER 3
+
+Recipe: 1x1
+Items: 
+OAK_LOG 
+Result: OAK_PLANK 4
+
+Recipe: 2x2
+Items: 
+IRON_INGOT - 
+- IRON_INGOT 
+Result: SHEARS 1
+
+Recipe: 3x3
+Items: 
+PLANK IRON_INGOT PLANK 
+PLANK PLANK PLANK 
+- PLANK - 
+Result: SHIELD 1
+
+Recipe: 3x3
+Items: 
+- LOG - 
+LOG FURNACE LOG 
+- LOG - 
+Result: SMOKER 1
+
+Recipe: 1x1
+Items: 
+SPRUCE_LOG 
+Result: SPRUCE_PLANK 4
+
+Recipe: 2x1
+Items: 
+PLANK 
+PLANK 
+Result: STICK 4
+
+Recipe: 3x3
+Items: 
+STONE STONE - 
+STONE STICK - 
+- STICK - 
+Result: STONE_AXE 1
+
+Recipe: 3x3
+Items: 
+STONE STONE STONE 
+- STICK - 
+- STICK - 
+Result: STONE_PICKAXE 1
+
+Recipe: 3x3
+Items: 
+- STONE - 
+- STONE - 
+- STICK - 
+Result: STONE_SWORD 1
+
+Recipe: 3x3
+Items: 
+PLANK PLANK - 
+PLANK STICK - 
+- STICK - 
+Result: WOODEN_AXE 1
+
+Recipe: 3x3
+Items: 
+PLANK PLANK PLANK 
+- STICK - 
+- STICK - 
+Result: WOODEN_PICKAXE 1
+
+Recipe: 3x3
+Items: 
+- PLANK - 
+- PLANK - 
+- STICK - 
+Result: WOODEN_SWORD 1
+
+EXCEPTION: Folder NOTFOUND not found
