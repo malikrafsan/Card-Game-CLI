@@ -34,3 +34,6 @@
 .vscode
 main
 check
+
+# doxygen output
+doxygen/*
