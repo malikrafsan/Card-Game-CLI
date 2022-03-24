@@ -41,6 +41,10 @@ string Recipe::getResult() const {
   return (this->result);
 }
 
+int Recipe::getResultQty() const {
+  return (this->resultQty);
+}
+
 vector<string> Recipe::getItems() const {
   return (this->items);
 }

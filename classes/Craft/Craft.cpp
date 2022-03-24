@@ -125,12 +125,14 @@ Slot* Craft::craftTool() {
 }
 
 Slot* Craft::craftNonTool() {
-    int rowRecipe, colRecipe, rowCraft, colCraft, ii, jj, lowest;
+    int rowRecipe, colRecipe, rowCraft, colCraft, ii, jj, lowest, id;
     int i = 0;
     bool found = false;
     bool out = false;
     bool flipped = false;
-    string itemCrafted;
+    Item* newItem;
+    Slot* newItemSlot;
+    string itemCraftedName;
 
     while (i < this->recipes.size()) {
         rowRecipe = this->recipes[i].getRow()-1;
@@ -141,9 +143,9 @@ Slot* Craft::craftNonTool() {
         while (rowCraft + rowRecipe <= this->row-1 && !found) {
             while (colCraft + colRecipe <= this->col-1 && !found) {
                 jj = 0;
-                while (jj <= this->row-1 && !found && !out) {
+                while (jj <= this->col-1 && !found && !out) {
                     ii = 0;
-                    while (ii <= this->col-1 && !found && !out) {
+                    while (ii <= this->row-1 && !found && !out) {
                         if (ii < rowCraft || ii > rowCraft + rowRecipe || jj < colCraft || jj > colCraft + colRecipe) {
                             if (this->arr[ii*this->col + jj].getItem() != NULL) {
                                 out = true;
@@ -192,7 +194,7 @@ Slot* Craft::craftNonTool() {
                     jj = this->col-1;
                     while (jj >= 0 && !found && !out) {
                         ii = 0;
-                        while (ii <= this->col-1 && !found && !out) {
+                        while (ii <= this->row-1 && !found && !out) {
                             if (ii < rowCraft || ii > rowCraft + rowRecipe || jj > colCraft || jj < colCraft - colRecipe) {
                                 if (this->arr[ii*this->col + jj].getItem() != NULL) {
                                     out = true;
@@ -225,17 +227,32 @@ Slot* Craft::craftNonTool() {
 
     i--;
     if (found) {
-        lowest = 1;
-        itemCrafted =  recipes[i].getResult();
+        lowest = 65;
+        itemCraftedName =  recipes[i].getResult();
         for (ii = 0; ii < this->row; ii++) {
             for (jj = 0; jj < this->col; jj++) {
-                this->arr[ii*this->col + jj].remove(1);
+                if (this->arr[ii*this->col + jj].getItem() != NULL && this->arr[ii*this->col + jj].getQuantity() < lowest) {
+                    lowest = this->arr[ii*this->col + jj].getQuantity();
+                }
             }
         }
-        return item;
+
+        for (ii = 0; ii < this->row; ii++) {
+            for (jj = 0; jj < this->col; jj++) {
+                if (this->arr[ii*this->col + jj].getItem() != NULL) {
+                    this->arr[ii*this->col + jj].remove(lowest);
+                }
+            }
+        }
+
+        id = mapItemName[itemCraftedName];
+        newItem = mapItem[id]->clone();
+        newItemSlot = new Slot(newItem, lowest*recipes[i].getResultQty());
+
+        return newItemSlot;
     }
     else{
-        throw adwdkoak()
+        throw CannotCraftExceptions();
     }
 }
 
