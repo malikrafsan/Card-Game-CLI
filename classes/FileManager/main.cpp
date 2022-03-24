@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
   FileManager fm;
 
   try {
-    string outputFile = "out/out.o";
+    string outputFile = "out1/out2/out.o";
     vector<string> data = {"1:1", "2:2", "3:3"};
 
     cout << "WRITE FILE " << outputFile << endl;
