@@ -52,11 +52,14 @@ GameManager::~GameManager() {
     for(int i=0;i<(int)v.size();i++) {
         delete v[i];
     }
+    delete craft;
 }
 
 void GameManager::play() {
     bool isExit=false;
+    string divider = "\n==========================================================\n";
     while(!isExit) {
+        cout <<divider;
         cout <<(*craft) <<"\n";
         cout <<inventory <<"\n";
         vector<string> command = terminalManager.readCommand();
@@ -260,7 +263,7 @@ void GameManager::helpCommand(vector<string> command) {
 
             cout <<"EXIT\n";
             cout <<"-> exit program\n\n";
-            
+
             cout <<"HELP\n";
             cout <<"-> show this message\n\n";
         } else {

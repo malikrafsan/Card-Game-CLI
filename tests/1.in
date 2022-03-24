@@ -7,3 +7,4 @@ CRAFT
 MOVE I2 1 C7
 CRAFT
 EXPORT tests/1.out
+EXIT
