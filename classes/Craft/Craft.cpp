@@ -129,7 +129,6 @@ Slot* Craft::craftNonTool() {
     int i = 0;
     bool found = false;
     bool out = false;
-    bool flipped = false;
     Item* newItem;
     Slot* newItemSlot;
     string itemCraftedName;
@@ -152,7 +151,7 @@ Slot* Craft::craftNonTool() {
                             }
                         }
                         else {
-                            if (recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (jj-colCraft)] == "-") {
+                            if (this->recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (jj-colCraft)] == "-") {
                                 if (this->arr[ii*this->col + jj].getItem() != NULL) {
                                     out = true;
                                 }
@@ -161,7 +160,7 @@ Slot* Craft::craftNonTool() {
                                 if (this->arr[ii*this->col + jj].getItem() == NULL) {
                                     out = true;
                                 }
-                                else if (this->arr[ii*this->col + jj].getItem()->getType() != recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (jj-colCraft)]) {
+                                else if (this->arr[ii*this->col + jj].getItem()->getType() != this->recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (jj-colCraft)]) {
                                     out = true;
                                 }
                             }
@@ -198,17 +197,17 @@ Slot* Craft::craftNonTool() {
 
             while (rowCraft + rowRecipe <= this->row-1 && !found) {
                 while (colCraft - colRecipe >= 0 && !found) {
-                    ii = this->row-1;
-                    while (ii >= 0 && !found && !out) {
-                        jj = 0;
-                        while (jj <= this->col-1 && !found && !out) {
+                    ii = 0;
+                    while (ii <= this->row-1 && !found && !out) {
+                        jj = this->col-1;
+                        while (jj >= 0 && !found && !out) {
                             if (ii < rowCraft || ii > rowCraft + rowRecipe || jj > colCraft || jj < colCraft - colRecipe) {
                                 if (this->arr[ii*this->col + jj].getItem() != NULL) {
                                     out = true;
                                 }
                             }
                             else {
-                                if (recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (colCraft-jj)] == "-") {
+                                if (this->recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (colCraft-jj)] == "-") {
                                     if (this->arr[ii*this->col + jj].getItem() != NULL) {
                                         out = true;
 
@@ -218,7 +217,7 @@ Slot* Craft::craftNonTool() {
                                     if (this->arr[ii*this->col + jj].getItem() == NULL) {
                                         out = true;
                                     }
-                                    else if (this->arr[ii*this->col + jj].getItem()->getType() != recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (colCraft-jj)]) {
+                                    else if (this->arr[ii*this->col + jj].getItem()->getType() != this->recipes[i].getItems()[(ii-rowCraft)*this->recipes[i].getCol() + (colCraft-jj)]) {
                                         out = true;
                                     }
                                 }
@@ -226,12 +225,12 @@ Slot* Craft::craftNonTool() {
                             
                             if (ii == this->row - 1 && jj == 0 && !out) {
                                 found = true;
-                                flipped = true;
                             }
                             jj++;
                         }
                         ii--;
                     }
+                    out = false;
                     colCraft--;
                 }
                 rowCraft++;
