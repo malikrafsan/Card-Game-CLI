@@ -140,6 +140,7 @@ Slot* Craft::craftNonTool() {
         colCraft = 0;
 
         while (rowCraft + rowRecipe <= this->row-1 && !found) {
+            colCraft = 0;
             while (colCraft + colRecipe <= this->col-1 && !found) {
                 ii = 0;
                 while (ii <= this->row-1 && !found && !out) {
@@ -196,6 +197,7 @@ Slot* Craft::craftNonTool() {
             colCraft = this->col-1;
 
             while (rowCraft + rowRecipe <= this->row-1 && !found) {
+                colCraft = this->col-1;
                 while (colCraft - colRecipe >= 0 && !found) {
                     ii = 0;
                     while (ii <= this->row-1 && !found && !out) {
