@@ -24,3 +24,10 @@ You can add more tests by adding more files to the tests folder. Tests consists 
 As the test is done by comparing the output files, you can freely use standard output in your program.
 
 Automated testing will not work if you are using GUI (obviously).
+
+## How to generate test cases
+  ```
+  cd generated_tests
+  g++ -std=c++17 main.cpp ../classes/FileManager/FileManager.cpp ../classes/Recipe/Recipe.cpp -o main
+  ./main
+  ```
