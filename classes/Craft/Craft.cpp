@@ -117,7 +117,7 @@ Slot* Craft::craftTool() {
 
     Slot* res = new Slot(newTool, 1);
 
-    for (int i = 0; i < idxCrafted.size(); i++) {
+    for (int i = 0; i < idxCrafted.size(    ); i++) {
         this->arr[idxCrafted[i]].remove(1);
     }
 
@@ -134,7 +134,7 @@ Slot* Craft::craftNonTool() {
     Slot* newItemSlot;
     string itemCraftedName;
 
-    while (i < this->recipes.size()) {
+    while (i < this->recipes.size() && !found) {
         rowRecipe = this->recipes[i].getRow()-1;
         colRecipe = this->recipes[i].getCol()-1;
         rowCraft = 0;
@@ -155,6 +155,9 @@ Slot* Craft::craftNonTool() {
                             if (recipes[i].getItems()[(ii-rowCraft)*this->col + (jj-colCraft)] == "-" && this->arr[ii*this->col + jj].getItem() != NULL) {
                                 out = true;
                             }
+                            else if (this->arr[ii*this->col + jj].getItem() == NULL) {
+                                    out = true;
+                                }
                             else if (this->arr[ii*this->col + jj].getItem()->getType() != recipes[i].getItems()[(ii-rowCraft)*this->col + (jj-colCraft)]) {
                                 out = true;
                             }
@@ -183,7 +186,7 @@ Slot* Craft::craftNonTool() {
 
     if (!found) {
         i = 0;
-        while (i < this->recipes.size()) {
+        while (i < this->recipes.size() && !found) {
             rowRecipe = this->recipes[i].getRow()-1;
             colRecipe = this->recipes[i].getCol()-1;
             rowCraft = 0;
@@ -202,6 +205,9 @@ Slot* Craft::craftNonTool() {
                             }
                             else {
                                 if (recipes[i].getItems()[(ii-rowCraft)*this->col + (colCraft-jj)] == "-" && this->arr[ii*this->col + jj].getItem() != NULL) {
+                                    out = true;
+                                }
+                                else if (this->arr[ii*this->col + jj].getItem() == NULL) {
                                     out = true;
                                 }
                                 else if (this->arr[ii*this->col + jj].getItem()->getType() != recipes[i].getItems()[(ii-rowCraft)*this->col + (colCraft-jj)]) {
