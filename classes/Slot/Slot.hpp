@@ -23,7 +23,6 @@ class Slot {
         void add(Slot& slot);
         Slot remove(int qt);
         void clear();
-        void print() const;
         string exportItem() const;
 };
 

@@ -127,7 +127,6 @@ vector<string> Inventory::exportInventory() {
     vector<string> result;
     for (int i=0; i< this->row*this->col; i++){
         result.push_back(this->arr[i].exportItem());
-        cout << result[i] << endl;
     }
     return result;
 }
