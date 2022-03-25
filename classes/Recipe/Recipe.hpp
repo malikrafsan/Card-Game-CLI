@@ -17,14 +17,19 @@ private:
   int resultQty;
 
 public:
+  //! Constructor
   Recipe();
   Recipe(vector<string> data);
+
+  //! Getter
   int getRow() const;
   int getCol() const;
   string getResult() const;
-  int getResultQty() const;
-  friend ostream& operator<<(ostream &os, const Recipe &r);
   vector<string> getItems() const;
+  int getResultQty() const;
+
+  //! For showing recipes
+  friend ostream& operator<<(ostream &os, const Recipe &r);
 };
 
 class RecipeWrongFormatException: public exception {
