@@ -9,7 +9,7 @@ using namespace std;
 int main() {
   int correct = 0, total = 0;
 
-  for (const auto &entry : filesystem::directory_iterator("./tests")) {
+  for (const auto &entry : filesystem::directory_iterator("./generated_tests/tests")) {
     string filename = entry.path().filename().string();
     if (filename.size() >= 3 && filename.substr(filename.size() - 3) == "ans") {
       total++;
@@ -22,6 +22,8 @@ int main() {
         answer.erase(answer.find_last_not_of(" \n\r\t") + 1);
         output.erase(output.find_last_not_of(" \n\r\t") + 1);
         if (answer != output) {
+          cout << "File: " << filename << " ANSWER: " << answer << endl;
+          cout << "File: " << "./tests/" + entry.path().stem().string() + ".out" <<  " OUTPUT: " << output << endl;
           same = false;
         }
       }
