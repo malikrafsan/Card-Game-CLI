@@ -229,9 +229,9 @@ Slot* Craft::craftNonTool() {
             }
             i++;
         }
+        i--;
     }
 
-    i--;
     if (found) {
         lowest = 65;
         itemCraftedName =  recipes[i].getResult();
