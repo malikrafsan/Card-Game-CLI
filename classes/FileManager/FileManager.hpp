@@ -11,8 +11,11 @@ using namespace std;
 
 class FileManager {
 public:
+  //! Write data to file with name as filename
   void write(string filename, vector<string> data);
+  //! Read multiple files from directory on path
   vector<vector<string>> readFiles(string path);
+  //! Read single file from file path
   vector<string> readFile(string path);
 };
 
