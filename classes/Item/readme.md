@@ -54,15 +54,6 @@ usage:
 item->isTool
 ```
 
-
-## Debugging
-Terdapat method `describe()` untuk mengecek seluruh atribut yang dimiliki tipe
-usage:
-```
-item->describe()
-```
-
-
 ## Lain-Lain
 
 ### Id

@@ -13,11 +13,6 @@ public:
     Tool(const Tool& other) : Item(other) { durability = other.durability; }
     void use() { durability--; }; 
 
-    void describe() const {
-        Item::describe();
-        cout << "Durability : " << durability << endl;
-    }
-
     int getDurability() const { return durability; }
 
     Tool *clone() const { 
