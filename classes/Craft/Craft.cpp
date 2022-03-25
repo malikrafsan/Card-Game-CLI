@@ -226,9 +226,9 @@ Slot* Craft::craftNonTool() {
                             if (ii == this->row - 1 && jj == 0 && !out) {
                                 found = true;
                             }
-                            jj++;
+                            jj--;
                         }
-                        ii--;
+                        ii++;
                     }
                     out = false;
                     colCraft--;
