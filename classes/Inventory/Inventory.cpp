@@ -172,8 +172,8 @@ bool Inventory::canBeAdded(Item* item, string INV_SLOT_ID, int quantity) {
 
 ostream &operator<<( ostream &output, const Inventory &inventory) {
     output << "Inventory:" << endl;
-    for (int i = 0; i < inventory.row; i++) {
-        for (int j = 0; j < inventory.col; j++) {
+    for (int j = 0; j < inventory.col; j++) {
+        for (int i = 0; i < inventory.row; i++) {
             int idx = i*inventory.col + j;
             Item* temp = inventory.arr[idx].getItem();
             string out;
