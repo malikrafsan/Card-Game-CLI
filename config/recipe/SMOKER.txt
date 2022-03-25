@@ -1,5 +1,0 @@
-3 3
-- LOG -
-LOG FURNACE LOG
-- LOG -
-SMOKER 1
