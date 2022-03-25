@@ -23,16 +23,23 @@ class GameManager {
 
     public:
     GameManager();
-    // fitur load/save?
     ~GameManager();
 
+    //! Start Game
     void play();
+    //! Execute GIVE command
     void giveCommand(vector<string> command);
+    //! Execute DISCARD command
     void discardCommand(vector<string> command);
+    //! Execute MOVE command
     void moveCommand(vector<string> command);
+    //! Execute CRAFT command
     void craftCommand(vector<string> command);
+    //! Execute USE command
     void useCommand(vector<string> command);
+    //! Execute EXPORT command
     void exportCommand(vector<string> command);
+    //! Execute HELP command
     void helpCommand(vector<string> command);
 };
 

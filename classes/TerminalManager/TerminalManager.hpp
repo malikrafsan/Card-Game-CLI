@@ -10,6 +10,7 @@ class TerminalManager {
     private:
     public:
     TerminalManager();
+    //! ask command to forward it to GameManager
     vector<string> readCommand();
 };
 
