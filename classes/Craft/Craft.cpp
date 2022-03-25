@@ -296,7 +296,7 @@ ostream &operator<<( ostream &output, const Craft &craft) {
                 }
             }
         }
-        cout << endl;
+        output << endl;
     }
     return output;
 }

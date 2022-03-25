@@ -99,17 +99,9 @@ Slot Slot::remove(int qt) {
 }
 
 void Slot::clear() {
+    delete this->item;
     this->item = NULL;
     this->quantity = 0;
-}
-
-void Slot::print() const {
-    if (this->item != NULL) {
-        cout << "Id : " << item->getId() << endl;
-        cout << "Quantity : " << quantity << endl;
-    } else {
-        cout << "Slot is empty" << endl;
-    }
 }
 
 string Slot::exportItem() const {
