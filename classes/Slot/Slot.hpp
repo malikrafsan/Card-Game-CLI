@@ -10,19 +10,28 @@ class Slot {
         int quantity;
 
     public:
+        //! Constructor
         Slot();
         Slot(Item* item, int quantity);
+        //! Copy constructor
         Slot(const Slot& slot);
+        //! Assignment operator
         Slot& operator=(const Slot& slot);
+        //! Destructor
         ~Slot();
 
+        //! Getter
         Item* getItem() const;
         int getQuantity() const;
 
+        //! Adding item to slot
         void add(Item* item, int qt);
         void add(Slot& slot);
+        //! Removing item from slot
         Slot remove(int qt);
+        //! Clearing slot
         void clear();
+        //! Export slot
         string exportItem() const;
 };
 
