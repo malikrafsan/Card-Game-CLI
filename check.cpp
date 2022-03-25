@@ -8,8 +8,10 @@ using namespace std;
 
 int main() {
   int correct = 0, total = 0;
+  string testPath = "./generated_tests/tests";
+  // string testPath = "./tests";
 
-  for (const auto &entry : filesystem::directory_iterator("./generated_tests/tests")) {
+  for (const auto &entry : filesystem::directory_iterator(testPath)) {
     string filename = entry.path().filename().string();
     if (filename.size() >= 3 && filename.substr(filename.size() - 3) == "ans") {
       total++;

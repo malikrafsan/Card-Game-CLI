@@ -37,9 +37,13 @@ int main() {
       vector<string> vStr = recipe.getItems();
       vector<string> vRes;
 
+      int offsetRow = 3 - recipe.getRow();
+      int offsetCol = 3 - recipe.getCol();
+
       for (int row = 0; row < recipe.getRow(); row++) {
         for (int col = 0; col < recipe.getCol(); col++) {
-          string item = vStr[row*recipe.getCol() + col];
+          // string item = vStr[row*recipe.getCol() + col]; regular
+          string item = vStr[(row+1) * recipe.getCol() - col - 1]; // flipped
           if (item == "-") {
             continue;
           }
@@ -50,7 +54,8 @@ int main() {
           }
 
           vRes.push_back("GIVE " + item + " 1");
-          vRes.push_back("MOVE I0 1 C" + to_string(row*3 + col));
+          // vRes.push_back("MOVE I0 1 C" + to_string(row*3 + col)); // pojok kiri atas
+          vRes.push_back("MOVE I0 1 C" + to_string(row*3 + col + offsetCol + (offsetRow *3))); // pojok kanan bawah
         }
       }
 

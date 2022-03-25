@@ -1,4 +1,4 @@
-TC_FOLDER = generated_tests/tests
+TC_FOLDER = generated_tests/tests # change to tests
 EXT_IN = in
 EXT_OUT = out
 EXT_ANS = ans
