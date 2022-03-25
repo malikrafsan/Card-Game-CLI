@@ -5,25 +5,25 @@
 // Tool.hpp
 class Tool : public Item {
 protected:
-    // durability of the tool
+    //! durability of the tool
     int durability;
 public:
-    // constructor
+    //! constructor
     Tool() : Item(), durability(-1) {}
-    // user defined constructor
+    //! user defined constructor
     Tool(int _id, string _name) : Item(_id, _name, true), durability(10) {}
-    // cctor
+    //! cctor
     Tool(int _id, string _name, int durability) : Item(_id, _name, durability), durability(durability) {}
-    // cctor
+    //! cctor
     Tool(const Tool& other) : Item(other) { durability = other.durability; }
     
-    // use the tool
+    //! use the tool
     void use() { durability--; }; 
 
-    // get durability of the tool
+    //! get durability of the tool
     int getDurability() const { return durability; }
 
-    // clone the tool
+    //! clone the tool
     Tool *clone() const { 
         Tool *clonedTool = new Tool(*this);
         return clonedTool;

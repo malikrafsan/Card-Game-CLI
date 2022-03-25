@@ -13,19 +13,19 @@ public:
 
 class NonTool : public Item {
 public:
-    // user defined constructor
+    //! user defined constructor
     NonTool(int _id, string _name) : Item(_id, _name, false) {}
     
-    // cctor
+    //! cctor
     NonTool(const NonTool &other) : Item(other) {}
     
-    // clone the non tool
+    //! clone the non tool
     virtual NonTool *clone() const { 
         NonTool *clonedNonTool = new NonTool(*this);
         return clonedNonTool;
     }
 
-    // use the non tool (throw exception)
+    //! use the non tool (throw exception)
     virtual void use (){ throw NonToolUseExeption(); }
 };
 
