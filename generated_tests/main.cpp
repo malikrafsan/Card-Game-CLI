@@ -29,6 +29,7 @@ int main() {
       ss >> type;
       ss >> isTool;
       itemId[name] = {id, isTool == "TOOL" ? true : false};
+      cout << "Item: " << name << " id: " << id << " type: " << type << " isTool: " << isTool << endl;
     }
 
     for (int i = 0; i < recipes2.size(); i++) {
@@ -41,6 +42,11 @@ int main() {
           string item = vStr[row*recipe.getCol() + col];
           if (item == "-") {
             continue;
+          }
+          if (item == "PLANK") {
+            item = "OAK_PLANK";
+          } else if (item == "STONE") {
+            item = "COBBLESTONE";
           }
 
           vRes.push_back("GIVE " + item + " 1");
