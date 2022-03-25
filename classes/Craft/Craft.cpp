@@ -112,6 +112,9 @@ Slot* Craft::craftTool() {
             }
         }
     }
+    if((int)idxCrafted.size()<2) {
+        return NULL;
+    }
     Item* item = this->arr[idxCrafted[0]].getItem();
     Tool* newTool = new Tool(item->getId(), item->getName(), totalDurability >= 10 ? 10 : totalDurability);
 
